@@ -60,31 +60,28 @@ def create_endpoint(mediapackage, event, context, auto_id=True):
 
     channel_id = event["ResourceProperties"]["ChannelId"]
 
-    endpoint_parms = {
-        "Id": endpoint_id,
-        "Description": "CloudFormation Stack ID %s" % event["StackId"],
-        "ChannelId": channel_id,
-        "ManifestName": "index",
-        "TimeDelaySeconds": 5,
-        "HlsPackage": {
-            "SegmentDurationSeconds": 6,
-            "PlaylistWindowSeconds": 60,
-            "PlaylistType": "event",
-            "AdMarkers": "none",
-            "IncludeIframeOnlyStream": True,
-            "UseAudioRenditionGroup": True,
-            "StreamSelection": {
-                "StreamOrder": "original"
-            }
-        }
-    }
-
     try:
         response = mediapackage.create_origin_endpoint(
-            OriginEndpointCreateParameters=endpoint_parms)
+            Id=endpoint_id,
+            Description="CloudFormation Stack ID %s" % event["StackId"],
+            ChannelId=channel_id,
+            ManifestName="index",
+            TimeDelaySeconds=5,
+            HlsPackage={
+                "SegmentDurationSeconds": 6,
+                "PlaylistWindowSeconds": 60,
+                "PlaylistType": "event",
+                "AdMarkers": "none",
+                "IncludeIframeOnlyStream": True,
+                "UseAudioRenditionGroup": True,
+                "StreamSelection": {
+                    "StreamOrder": "original"
+                }
+            }
+        )
         print(json.dumps(response))
         outputs = {
-            "OriginEndpointUrl": response['OriginEndpoint']['Url']
+            "OriginEndpointUrl": response['Url']
         }
         result = {
             'Status': 'SUCCESS',

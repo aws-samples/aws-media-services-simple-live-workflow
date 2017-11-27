@@ -1,0 +1,17 @@
+appdirs==1.4.3
+awscli==1.12.2
+boto3==1.4.4
+botocore==1.8.2
+colorama==0.3.7
+docutils==0.14
+futures==3.1.1
+jmespath==0.9.3
+packaging==16.8
+pyasn1==0.4.2
+pyparsing==2.2.0
+python-dateutil==2.6.1
+PyYAML==3.12
+rsa==3.4.2
+s3transfer==0.1.11
+six==1.11.0
+virtualenv==15.1.0

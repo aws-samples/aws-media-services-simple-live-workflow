@@ -64,12 +64,14 @@ def create_channel(mediapackage, event, context, auto_id=True):
 
     try:
         response = mediapackage.create_channel(
-            ChannelCreateParameters=channel)
+            Id=channel_id,
+            Description="CloudFormation Stack ID %s" % event["StackId"]
+        )
         print(json.dumps(response))
         attributes = {
-            "Url": response["Channel"]["HlsIngest"]["IngestEndpoints"][0]["Url"],
-            "Username": response["Channel"]["HlsIngest"]["IngestEndpoints"][0]["Username"],
-            "Password": response["Channel"]["HlsIngest"]["IngestEndpoints"][0]["Password"]
+            "Url": response["HlsIngest"]["IngestEndpoints"][0]["Url"],
+            "Username": response["HlsIngest"]["IngestEndpoints"][0]["Username"],
+            "Password": response["HlsIngest"]["IngestEndpoints"][0]["Password"]
         }
         result = {
             'Status': 'SUCCESS',
