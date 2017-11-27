@@ -1,0 +1,53 @@
+<html lang="us">
+
+<head>
+    <meta charset="utf-8">
+    <title>AWS Elemental MediaLive and MediaPackage Viewer</title>
+    <link href="https://vjs.zencdn.net/6.2.7/video-js.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://vjs.zencdn.net/6.2.7/video.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.10.1/videojs-contrib-hls.js"></script>
+    <script src="code.js"></script>
+</head>
+
+<body>
+    <div style="width:60%; padding-bottom: 10px; font-size: larger;">
+        <p>Test your video playback using this page!</p>
+    </div>
+
+    <table cellpadding="5" border="0" id="player_table" style="width:100%">
+        <tr>
+            <td>Live Playback</td>
+            <td>Live-to-VOD Playback</td>
+        </tr>
+        <tr>
+            <td><p style="text-align: right; font-size: smaller;" id="live_source_URL">Live source URL </p> </td>
+            <td><p style="text-align: right; font-size: smaller;" id="vod_source_URL"> VOD source URL </p> </td>
+        </tr>
+
+        <tr>
+            <td width="50%">
+                <video id="video_player_live" class="video-js vjs-default-skin" controls muted preload="auto" data-setup='{"fluid": true}'>
+                </video>
+            </td>
+
+            <td width="50%">
+                <video id="video_player_vod" class="video-js vjs-default-skin" controls muted preload="auto" data-setup='{"fluid": true}'>
+                </video>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                Start Time in ISO format:<br>
+                <input type="text" name="starttime" id="starttime" value="" size="40"><br> End Time in ISO format:<br>
+                <input type="text" name="endtime" id="endtime" value="" size="40">
+                <br/>Change the timestamps above and click <button id="set_vod_button">here</button> to load the VOD player.
+                <br>
+            </td>
+        </tr>
+    </table>
+    <br/><br/>
+</body>
+
+</html>

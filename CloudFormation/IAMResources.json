@@ -1,0 +1,65 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This template creates IAM resources needed by AWS Elemental MediaLive and MediaPackage.",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "37c76c0a-0ad3-416b-b2f2-8e940c1e6b16": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 360,
+                    "y": 120
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "MediaLiveAccessRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AmazonSSMFullAccess",
+                    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+                ],
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [{
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "ec2.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "medialive.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "37c76c0a-0ad3-416b-b2f2-8e940c1e6b16"
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "MediaLiveAccessRoleArn": {
+            "Description": "This role allows access to your account resources from MediaLive",
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaLiveAccessRole",
+                    "Arn"
+                ]
+            }
+        }
+    }
+}

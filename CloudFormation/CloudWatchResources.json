@@ -1,0 +1,135 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This template creates an AWS CloudWatch dashboard to monitor an ingest channel and origin endpoint.",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "8ff056a3-2127-4253-9707-12233e99c3d9": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 396.0104064941406,
+                    "y": 140.01388549804688
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "86240838-82ba-4ff3-be08-ce8483a92677": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 271.6031330199244,
+                    "y": 143.41592817537668
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "a4e3bc61-7cfd-4ba1-9049-4250715bd8fb": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 270,
+                    "y": 240
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "LiveStreamingWorkshopDashboard": {
+            "Type": "AWS::CloudWatch::Dashboard",
+            "Properties": {
+                "DashboardBody": { "Fn::Sub" : "{\"widgets\": [{\"type\": \"metric\",\"x\": 0,\"y\": 0,\"width\": 24,\"height\": 6,\"properties\": {\"view\": \"timeSeries\",\"stacked\": false,\"region\": \"${AWS::Region}\",\"metrics\": [[ \"MediaLive\", \"NetworkOut\", \"ChannelId\", \"${MediaLiveChannelId}\", \"Pipeline\", \"0\", { \"stat\": \"Sum\" } ],[ \"...\", \"1\", { \"stat\": \"Sum\" } ]],\"title\": \"MediaLive Channel Network Out\",\"period\": 300}},{\"type\": \"metric\",\"x\": 0,\"y\": 6,\"width\": 24,\"height\": 6,\"properties\": {\"period\": 300,\"stat\": \"Average\",\"start\": \"-PT1H\",\"end\": \"P0D\",\"title\": \"MediaPackage Egress Bytes\",\"region\":\"${AWS::Region}\",\"view\": \"timeSeries\",\"stacked\": false,\"metrics\": [[ \"AWS/MediaPackage\", \"EgressBytes\", \"Channel\", \"${MediaPackageChannelId}\", \"OriginEndpoint\", \"${MediaPackageEndpointId}\", { \"stat\": \"Sum\", \"period\": 60 } ]]}}]}"}
+             },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "8ff056a3-2127-4253-9707-12233e99c3d9"
+                }
+            }
+        },
+        "EgressRateLowAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [],
+                "MetricName": "EgressBytes",
+                "Namespace": "AWS/MediaPackage",
+                "Statistic": "Sum",
+                "Dimensions": [
+                    {
+                        "Name": "Channel",
+                        "Value": {
+                            "Ref": "MediaPackageChannelId"
+                        }
+                    },
+                    {
+                        "Name": "OriginEndpoint",
+                        "Value": {
+                            "Ref": "MediaPackageEndpointId"
+                        }
+                    }
+                ],
+                "Period": 60,
+                "EvaluationPeriods": 1,
+                "Threshold": 10000000,
+                "ComparisonOperator": "LessThanOrEqualToThreshold"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "86240838-82ba-4ff3-be08-ce8483a92677"
+                }
+            }
+        },
+        "EgressRateNormalAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [],
+                "MetricName": "EgressBytes",
+                "Namespace": "AWS/MediaPackage",
+                "Statistic": "Sum",
+                "Dimensions": [
+                    {
+                        "Name": "Channel",
+                        "Value": {
+                            "Ref": "MediaPackageChannelId"
+                        }
+                    },
+                    {
+                        "Name": "OriginEndpoint",
+                        "Value": {
+                            "Ref": "MediaPackageEndpointId"
+                        }
+                    }
+                ],
+                "Period": 60,
+                "EvaluationPeriods": 1,
+                "Threshold": 10000000,
+                "ComparisonOperator": "GreaterThanThreshold"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "a4e3bc61-7cfd-4ba1-9049-4250715bd8fb"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "MediaLiveChannelId": {
+            "Description": "MediaLive Channel ID",
+            "Type": "String"
+        },
+        "MediaPackageChannelId": {
+            "Description": "MediaPackage Ingest Channel ID",
+            "Type": "String"
+        },
+        "MediaPackageEndpointId": {
+            "Type": "String",
+            "Description": "MediaPackage Origin Endpoint ID"
+        }
+    }
+}

@@ -1,0 +1,213 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This template creates an end-to-end live and VOD streaming workflow. The AWS Elemental MediaLive channel will be started as the last step in stack creation.",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "63d3bd0b-8b73-4e7f-af2b-bdcee72c9f78": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 390,
+                    "y": 10
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "71f69562-6796-4f2b-92c7-e984f034f202": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 390,
+                    "y": 80
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "d7a1652f-dbfc-426d-9769-be3a16ec7393": {
+                "source": {
+                    "id": "71f69562-6796-4f2b-92c7-e984f034f202"
+                },
+                "target": {
+                    "id": "63d3bd0b-8b73-4e7f-af2b-bdcee72c9f78"
+                },
+                "z": 1
+            },
+            "d0e73ea0-b8e8-4667-a5af-e8c6fa42058a": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 590,
+                    "y": 80
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "71f69562-6796-4f2b-92c7-e984f034f202",
+                    "63d3bd0b-8b73-4e7f-af2b-bdcee72c9f78"
+                ]
+            },
+            "262cde8e-3bfc-4b70-931a-1ba9b84ec5f8": {
+                "source": {
+                    "id": "d0e73ea0-b8e8-4667-a5af-e8c6fa42058a"
+                },
+                "target": {
+                    "id": "71f69562-6796-4f2b-92c7-e984f034f202"
+                },
+                "z": 11
+            },
+            "5286676e-19f9-4ead-a6cc-6cb4ce454ae7": {
+                "source": {
+                    "id": "321e8e64-3767-47d6-9201-96e77eaf20c3"
+                },
+                "target": {
+                    "id": "d0e73ea0-b8e8-4667-a5af-e8c6fa42058a"
+                },
+                "z": 11
+            },
+            "5262f9c2-d19e-4432-b64a-754962d2697f": {
+                "source": {
+                    "id": "321e8e64-3767-47d6-9201-96e77eaf20c3"
+                },
+                "target": {
+                    "id": "71f69562-6796-4f2b-92c7-e984f034f202"
+                },
+                "z": 12
+            }
+        }
+    },
+    "Resources": {
+        "IAMModuleStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/IAMResources.json",
+                "TimeoutInMinutes": 5
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "63d3bd0b-8b73-4e7f-af2b-bdcee72c9f78"
+                }
+            }
+        },
+        "MediaPackageModuleStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/MediaPackageResources.json",
+                "TimeoutInMinutes": 5
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "71f69562-6796-4f2b-92c7-e984f034f202"
+                }
+            }
+        },
+        "MediaLiveModuleStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/MediaLiveResources.json",
+                "TimeoutInMinutes": 5,
+                "Parameters": {
+                    "HLSPrimarySource": {
+                        "Ref": "HLSPrimarySource"
+                    },
+                    "HLSSecondarySource": {
+                        "Ref": "HLSPrimarySource"
+                    },
+                    "PackagerPrimaryChannelUrl": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.MediaPackagePrimaryChannelUrl"
+                        ]
+                    },
+                    "PackagerPrimaryChannelUsername": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.MediaPackagePrimaryChannelUsername"
+                        ]
+                    },
+                    "PackagerPrimaryChannelPassword": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.MediaPackagePrimaryChannelPassword"
+                        ]
+                    },
+                    "PackagerSecondaryChannelUrl": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.MediaPackageSecondaryChannelUrl"
+                        ]
+                    },
+                    "PackagerSecondaryChannelUsername": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.MediaPackageSecondaryChannelUsername"
+                        ]
+                    },
+                    "PackagerSecondaryChannelPassword": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.MediaPackageSecondaryChannelPassword"
+                        ]
+                    },
+                    "MediaLiveAccessRoleArn": {
+                        "Fn::GetAtt": [
+                            "IAMModuleStack",
+                            "Outputs.MediaLiveAccessRoleArn"
+                        ]
+                    }
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "d0e73ea0-b8e8-4667-a5af-e8c6fa42058a"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "HLSPrimarySource": {
+            "Default": "http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/sdr_uncage_vanlife.m3u8",
+            "Description": "URL of the primary HLS pull source",
+            "Type": "String"
+        },
+        "HLSSecondarySource": {
+            "Default": "http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/sdr_uncage_vanlife.m3u8",
+            "Description": "URL of the secondary HLS pull source",
+            "Type": "String"
+        }
+    },
+    "Outputs": {
+        "MediaPackagePrimaryChannelLiveEndpointUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackageModuleStack",
+                    "Outputs.MediaPackagePrimaryChannelLiveEndpointUrl"
+                ]
+            },
+            "Description": "URL for the primary channel live origin endpoint"
+        },
+        "MediaPackagePrimaryChannelDelayedEndpointUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackageModuleStack",
+                    "Outputs.MediaPackagePrimaryChannelDelayedEndpointUrl"
+                ]
+            },
+            "Description": "URL for the primary channel delayed origin endpoint"
+        },
+        "MediaPackageSecondaryChannelLiveEndpointUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackageModuleStack",
+                    "Outputs.MediaPackageSecondaryChannelLiveEndpointUrl"
+                ]
+            },
+            "Description": "URL for the secondary channel live origin endpoint"
+        }
+    }
+}

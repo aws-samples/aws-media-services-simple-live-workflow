@@ -1,0 +1,388 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This template creates a AWS Elemental MediaLive input source and channel. The AWS Elemental MediaLive channel will be started as the last step in stack creation.",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "ae5e1cda-190b-4a5b-ba7f-a15f86496c0d": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 630,
+                    "y": 100
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "78524ead-765b-48ea-96e7-2ede276045f3"
+                ]
+            },
+            "78524ead-765b-48ea-96e7-2ede276045f3": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 770,
+                    "y": 150
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "5667aa1c-1a73-4a13-a394-27f9c5cc6e06"
+                ]
+            },
+            "5667aa1c-1a73-4a13-a394-27f9c5cc6e06": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 940,
+                    "y": 150
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "78524ead-765b-48ea-96e7-2ede276045f3"
+                ],
+                "isrelatedto": [
+                    "5667aa1c-1a73-4a13-a394-27f9c5cc6e06"
+                ]
+            },
+            "913522a6-15f8-4e9b-b6a6-da4016be5de8": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 520,
+                    "y": 310
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "78524ead-765b-48ea-96e7-2ede276045f3"
+                ]
+            },
+            "479c1480-a5bd-4fcf-be6f-4005546d4f4c": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 470,
+                    "y": 100
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "ae5e1cda-190b-4a5b-ba7f-a15f86496c0d"
+                ]
+            },
+            "1a114d16-d224-4a22-bf4d-7b6461846c23": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 520,
+                    "y": 200
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "422dcfa6-570f-4895-b61d-4bfb8e2e6535": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 600,
+                    "y": 200
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "7a98b6c0-e799-4557-bce5-0c0c44f5029f": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 320,
+                    "y": 310
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "913522a6-15f8-4e9b-b6a6-da4016be5de8",
+                    "479c1480-a5bd-4fcf-be6f-4005546d4f4c"
+                ]
+            }
+        }
+    },
+    "Resources": {
+        "MediaLiveInputResource": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::Join": [
+                            "-", [
+                                "rodeolabz",
+                                {
+                                    "Ref": "AWS::Region"
+                                }
+                            ]
+                        ]
+                    },
+                    "S3Key": "cloudformation/simpleliveworkflow_resources.zip"
+                },
+                "Environment": {},
+                "Handler": "medialive_input.event_handler",
+                "MemorySize": 768,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "MediaLiveResourceRole",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 300
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "ae5e1cda-190b-4a5b-ba7f-a15f86496c0d"
+                }
+            }
+        },
+        "MediaLiveResourceRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AdministratorAccess"
+                ],
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [{
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": [
+                                "lambda.amazonaws.com"
+                            ]
+                        },
+                        "Action": [
+                            "sts:AssumeRole"
+                        ]
+                    }]
+                },
+                "Path": "/"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "78524ead-765b-48ea-96e7-2ede276045f3"
+                }
+            }
+        },
+        "MediaLiveFullAccess": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [{
+                        "Effect": "Allow",
+                        "Action": [
+                            "medialive:*"
+                        ],
+                        "Resource": "*"
+                    }]
+                },
+                "PolicyName": "MediaLiveSimpleStreamingWorkflow",
+                "Roles": [{
+                    "Ref": "MediaLiveResourceRole"
+                }]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "5667aa1c-1a73-4a13-a394-27f9c5cc6e06"
+                }
+            }
+        },
+        "MediaLiveChannelResource": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::Join": [
+                            "-", [
+                                "rodeolabz",
+                                {
+                                    "Ref": "AWS::Region"
+                                }
+                            ]
+                        ]
+                    },
+                    "S3Key": "cloudformation/simpleliveworkflow_resources.zip"
+                },
+                "Environment": {},
+                "Handler": "medialive_channel.event_handler",
+                "MemorySize": 768,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "MediaLiveResourceRole",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 300
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "913522a6-15f8-4e9b-b6a6-da4016be5de8"
+                }
+            }
+        },
+        "MediaLiveInput": {
+            "Type": "AWS::CloudFormation::CustomResource",
+            "Properties": {
+                "ServiceToken": {
+                    "Fn::GetAtt": [
+                        "MediaLiveInputResource",
+                        "Arn"
+                    ]
+                },
+                "HLSPrimarySource": {
+                    "Ref": "HLSPrimarySource"
+                },
+                "HLSSecondarySource": {
+                    "Ref": "HLSSecondarySource"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "479c1480-a5bd-4fcf-be6f-4005546d4f4c"
+                }
+            }
+        },
+        "PackagerPrimaryChannelPasswordParm": {
+            "Type": "AWS::SSM::Parameter",
+            "Properties": {
+                "Name": {
+                    "Ref": "PackagerPrimaryChannelUsername"
+                },
+                "Type": "String",
+                "Value": {
+                    "Ref": "PackagerPrimaryChannelPassword"
+                },
+                "Description": "Packager Primary Channel Password"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "1a114d16-d224-4a22-bf4d-7b6461846c23"
+                }
+            }
+        },
+        "PackagerSecondaryChannelPasswordParm": {
+            "Type": "AWS::SSM::Parameter",
+            "Properties": {
+                "Name": {
+                    "Ref": "PackagerSecondaryChannelUsername"
+                },
+                "Type": "String",
+                "Value": {
+                    "Ref": "PackagerSecondaryChannelPassword"
+                },
+                "Description": "Packager Secondary Channel Password"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "422dcfa6-570f-4895-b61d-4bfb8e2e6535"
+                }
+            }
+        },
+        "MediaLiveChannel": {
+            "Type": "AWS::CloudFormation::CustomResource",
+            "Properties": {
+                "ServiceToken": {
+                    "Fn::GetAtt": [
+                        "MediaLiveChannelResource",
+                        "Arn"
+                    ]
+                },
+                "MediaLiveInputId": {
+                    "Ref": "MediaLiveInput"
+                },
+                "MediaLiveAccessRoleArn": {
+                    "Ref": "MediaLiveAccessRoleArn"
+                },
+                "PackagerPrimaryChannelUrl": {
+                    "Ref": "PackagerPrimaryChannelUrl"
+                },
+                "PackagerPrimaryChannelUsername": {
+                    "Ref": "PackagerPrimaryChannelUsername"
+                },
+                "PackagerSecondaryChannelUrl": {
+                    "Ref": "PackagerSecondaryChannelUrl"
+                },
+                "PackagerSecondaryChannelUsername": {
+                    "Ref": "PackagerSecondaryChannelUsername"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "7a98b6c0-e799-4557-bce5-0c0c44f5029f"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "HLSPrimarySource": {
+            "Default": "http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/sdr_uncage_vanlife.m3u8",
+            "Description": "URL of the primary HLS pull source",
+            "Type": "String"
+        },
+        "HLSSecondarySource": {
+            "Default": "http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/sdr_uncage_vanlife.m3u8",
+            "Description": "URL of the secondary HLS pull source",
+            "Type": "String"
+        },
+        "PackagerPrimaryChannelUrl": {
+            "Type": "String",
+            "Description": "URL for the primary channel WebDAV ingest"
+        },
+        "PackagerPrimaryChannelUsername": {
+            "Type": "String",
+            "Description": "Username for the primary channel WebDAV ingest"
+        },
+        "PackagerPrimaryChannelPassword": {
+            "Type": "String",
+            "Description": "Password for the primary channel WebDAV ingest"
+        },
+        "PackagerSecondaryChannelUrl": {
+            "Type": "String",
+            "Description": "URL for the secondary channel WebDAV ingest"
+        },
+        "PackagerSecondaryChannelUsername": {
+            "Type": "String",
+            "Description": "Username for the secondary channel WebDAV ingest"
+        },
+        "PackagerSecondaryChannelPassword": {
+            "Type": "String",
+            "Description": "Password for the secondary channel WebDAV ingest"
+        },
+        "MediaLiveAccessRoleArn": {
+            "Type": "String",
+            "Description": "Role ARN that permits MediaLive access to SSM EC2 Parameter Store"
+        }
+    },
+    "Outputs": {
+        "MediaLiveChannelId": {
+            "Value": {
+                "Ref": "MediaLiveChannel"
+            },
+            "Description": "ID for the MediaLive channel"
+        }
+    }
+}

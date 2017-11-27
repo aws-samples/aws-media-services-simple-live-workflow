@@ -1,0 +1,480 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This template creates AWS Elemental MediaPackage ingest channels and origin endpoints.",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "ae5e1cda-190b-4a5b-ba7f-a15f86496c0d": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 580,
+                    "y": 100
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "78524ead-765b-48ea-96e7-2ede276045f3"
+                ]
+            },
+            "78524ead-765b-48ea-96e7-2ede276045f3": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 770,
+                    "y": 150
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "40dd06c1-dc71-4293-9ce0-6dc384651fae": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 120,
+                    "y": 100
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "ae5e1cda-190b-4a5b-ba7f-a15f86496c0d"
+                ]
+            },
+            "3025085f-75ba-416a-802b-31d9a7385613": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 120,
+                    "y": 320
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "ae5e1cda-190b-4a5b-ba7f-a15f86496c0d"
+                ]
+            },
+            "6517fd85-8aa7-4664-8437-c3ea2dc053de": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 580,
+                    "y": 200
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "78524ead-765b-48ea-96e7-2ede276045f3"
+                ]
+            },
+            "376667da-ea62-4513-946d-4f54a2c9a181": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 220,
+                    "y": 180
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "6517fd85-8aa7-4664-8437-c3ea2dc053de",
+                    "40dd06c1-dc71-4293-9ce0-6dc384651fae"
+                ]
+            },
+            "5d799e13-d625-422e-ac5a-8c600e06d4e5": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 350,
+                    "y": 180
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "6517fd85-8aa7-4664-8437-c3ea2dc053de",
+                    "3025085f-75ba-416a-802b-31d9a7385613",
+                    "6aab3ab8-2d31-4bc4-8ea8-94e79df91b26",
+                    "40dd06c1-dc71-4293-9ce0-6dc384651fae"
+                ]
+            },
+            "6aab3ab8-2d31-4bc4-8ea8-94e79df91b26": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 580,
+                    "y": 280
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "78524ead-765b-48ea-96e7-2ede276045f3"
+                ]
+            },
+            "5f73f634-c2ff-4291-a1b9-476425b39416": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 350,
+                    "y": 310
+                },
+                "z": 0,
+                "embeds": [],
+                "isrelatedto": [
+                    "6517fd85-8aa7-4664-8437-c3ea2dc053de",
+                    "40dd06c1-dc71-4293-9ce0-6dc384651fae",
+                    "3025085f-75ba-416a-802b-31d9a7385613"
+                ]
+            }
+        }
+    },
+    "Resources": {
+        "MediaPackageChannelResource": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::Join": [
+                            "-", [
+                                "rodeolabz",
+                                {
+                                    "Ref": "AWS::Region"
+                                }
+                            ]
+                        ]
+                    },
+                    "S3Key": "cloudformation/simpleliveworkflow_resources.zip"
+                },
+                "Environment": {},
+                "Handler": "mediapackage_channel.event_handler",
+                "MemorySize": 768,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "MediaPackageResourceRole",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 300
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "ae5e1cda-190b-4a5b-ba7f-a15f86496c0d"
+                }
+            }
+        },
+        "MediaPackageResourceRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AdministratorAccess"
+                ],
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [{
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": [
+                                "lambda.amazonaws.com"
+                            ]
+                        },
+                        "Action": [
+                            "sts:AssumeRole"
+                        ]
+                    }]
+                },
+                "Path": "/"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "78524ead-765b-48ea-96e7-2ede276045f3"
+                }
+            }
+        },
+        "MediaPackagePrimaryChannel": {
+            "Type": "AWS::CloudFormation::CustomResource",
+            "Properties": {
+                "ServiceToken": {
+                    "Fn::GetAtt": [
+                        "MediaPackageChannelResource",
+                        "Arn"
+                    ]
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "40dd06c1-dc71-4293-9ce0-6dc384651fae"
+                }
+            }
+        },
+        "MediaPackageSecondaryChannel": {
+            "Type": "AWS::CloudFormation::CustomResource",
+            "Properties": {
+                "ServiceToken": {
+                    "Fn::GetAtt": [
+                        "MediaPackageChannelResource",
+                        "Arn"
+                    ]
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "3025085f-75ba-416a-802b-31d9a7385613"
+                }
+            }
+        },
+        "MediaPackageLiveEndpointResource": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::Join": [
+                            "-", [
+                                "rodeolabz",
+                                {
+                                    "Ref": "AWS::Region"
+                                }
+                            ]
+                        ]
+                    },
+                    "S3Key": "cloudformation/simpleliveworkflow_resources.zip"
+                },
+                "Environment": {},
+                "Handler": "mediapackage_live_endpoint.event_handler",
+                "MemorySize": 768,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "MediaPackageResourceRole",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 300
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "6517fd85-8aa7-4664-8437-c3ea2dc053de"
+                }
+            }
+        },
+        "MediaPackagePrimaryLiveEndpoint": {
+            "Type": "AWS::CloudFormation::CustomResource",
+            "Properties": {
+                "ServiceToken": {
+                    "Fn::GetAtt": [
+                        "MediaPackageLiveEndpointResource",
+                        "Arn"
+                    ]
+                },
+                "ChannelId": {
+                    "Ref": "MediaPackagePrimaryChannel"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "376667da-ea62-4513-946d-4f54a2c9a181"
+                }
+            }
+        },
+        "MediaPackagePrimaryDelayedEndpoint": {
+            "Type": "AWS::CloudFormation::CustomResource",
+            "Properties": {
+                "ServiceToken": {
+                    "Fn::GetAtt": [
+                        "MediaPackageDelayedEndpointResource",
+                        "Arn"
+                    ]
+                },
+                "ChannelId": {
+                    "Ref": "MediaPackagePrimaryChannel"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "5d799e13-d625-422e-ac5a-8c600e06d4e5"
+                }
+            }
+        },
+        "MediaPackageDelayedEndpointResource": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::Join": [
+                            "-", [
+                                "rodeolabz",
+                                {
+                                    "Ref": "AWS::Region"
+                                }
+                            ]
+                        ]
+                    },
+                    "S3Key": "cloudformation/simpleliveworkflow_resources.zip"
+                },
+                "Environment": {},
+                "Handler": "mediapackage_delayed_endpoint.event_handler",
+                "MemorySize": 768,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "MediaPackageResourceRole",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 300
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "6aab3ab8-2d31-4bc4-8ea8-94e79df91b26"
+                }
+            }
+        },
+        "MediaPackageSecondaryLiveEndpoint": {
+            "Type": "AWS::CloudFormation::CustomResource",
+            "Properties": {
+                "ServiceToken": {
+                    "Fn::GetAtt": [
+                        "MediaPackageLiveEndpointResource",
+                        "Arn"
+                    ]
+                },
+                "ChannelId": {
+                    "Ref": "MediaPackageSecondaryChannel"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "5f73f634-c2ff-4291-a1b9-476425b39416"
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "MediaPackagePrimaryChannelID": {
+            "Value": {
+                "Ref": "MediaPackagePrimaryChannel"
+            },
+            "Description": "ID for the primary channel WebDAV ingest"
+        },
+        "MediaPackagePrimaryChannelUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackagePrimaryChannel",
+                    "Url"
+                ]
+            },
+            "Description": "URL for the primary channel WebDAV ingest"
+        },
+        "MediaPackagePrimaryChannelUsername": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackagePrimaryChannel",
+                    "Username"
+                ]
+            },
+            "Description": "Username for the primary channel WebDAV ingest"
+        },
+        "MediaPackagePrimaryChannelPassword": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackagePrimaryChannel",
+                    "Password"
+                ]
+            },
+            "Description": "Password for the primary channel WebDAV ingest"
+        },
+        "MediaPackageSecondaryChannelID": {
+            "Value": {
+                "Ref": "MediaPackageSecondaryChannel"
+            },
+            "Description": "ID for the secondary channel WebDAV ingest"
+        },
+        "MediaPackageSecondaryChannelUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackageSecondaryChannel",
+                    "Url"
+                ]
+            },
+            "Description": "URL for the secondary channel WebDAV ingest"
+        },
+        "MediaPackageSecondaryChannelUsername": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackageSecondaryChannel",
+                    "Username"
+                ]
+            },
+            "Description": "Username for the secondary channel WebDAV ingest"
+        },
+        "MediaPackageSecondaryChannelPassword": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackageSecondaryChannel",
+                    "Password"
+                ]
+            },
+            "Description": "Password for the secondary channel WebDAV ingest"
+        },
+        "MediaPackagePrimaryLiveEndpointId": {
+            "Value": {
+                "Ref": "MediaPackagePrimaryLiveEndpoint"
+            },
+            "Description": "ID for the primary channel live origin endpoint"
+        },
+        "MediaPackagePrimaryDelayedEndpointId": {
+            "Value": {
+                "Ref": "MediaPackagePrimaryDelayedEndpoint"
+            },
+            "Description": "ID for the primary channel delayed origin endpoint"
+        },
+        "MediaPackageSecondaryLiveEndpointId": {
+            "Value": {
+                "Ref": "MediaPackageSecondaryLiveEndpoint"
+            },
+            "Description": "ID for the secondary channel live origin endpoint"
+        },
+        "MediaPackagePrimaryChannelLiveEndpointUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackagePrimaryLiveEndpoint",
+                    "OriginEndpointUrl"
+                ]
+            },
+            "Description": "URL for the primary channel live origin endpoint"
+        },
+        "MediaPackagePrimaryChannelDelayedEndpointUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackagePrimaryDelayedEndpoint",
+                    "OriginEndpointUrl"
+                ]
+            },
+            "Description": "URL for the primary channel delayed origin endpoint"
+        },
+        "MediaPackageSecondaryChannelLiveEndpointUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackageSecondaryLiveEndpoint",
+                    "OriginEndpointUrl"
+                ]
+            },
+            "Description": "URL for the secondary channel live origin endpoint"
+        }
+    }
+}

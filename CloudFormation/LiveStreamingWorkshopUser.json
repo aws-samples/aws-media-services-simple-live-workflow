@@ -1,0 +1,99 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "8e0a1123-5a02-4f87-bd4a-e73fa4029fe0": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -138.48821066144703,
+                    "y": 101.51917302165026
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "643e6d74-d96c-45d1-af2d-53390850eebf"
+                ]
+            },
+            "643e6d74-d96c-45d1-af2d-53390850eebf": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -22.488503512903502,
+                    "y": 218.51887764561226
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "LiveStreamingWorkshopPolicy": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyName": "LiveStreamingWorkshopPolicy",
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Action": "mediapackage:*",
+                            "Resource": "*",
+                            "Effect": "Allow"
+                        },
+                        {
+                            "Action": "medialive:*",
+                            "Resource": "*",
+                            "Effect": "Allow"
+                        },
+                        {
+                            "Action": "cloudformation:*",
+                            "Resource": "*",
+                            "Effect": "Allow"
+                        },
+                        {
+                            "Action": "iam:*role*",
+                            "Resource": "*",
+                            "Effect": "Allow"
+                        },
+                        {
+                            "Action": "lambda:*",
+                            "Resource": "*",
+                            "Effect": "Allow"
+                        }
+                    ]
+                },
+                "Groups": [
+                    {
+                        "Ref": "LiveStreamingWorkshopGroup"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "8e0a1123-5a02-4f87-bd4a-e73fa4029fe0"
+                }
+            }
+        },
+        "LiveStreamingWorkshopGroup": {
+            "Type": "AWS::IAM::Group",
+            "Properties": {
+                "GroupName": "LiveStreamingWorkshopGroup",
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/CloudWatchFullAccess",
+                    "arn:aws:iam::aws:policy/AmazonSSMFullAccess",
+                    "arn:aws:iam::aws:policy/IAMReadOnlyAccess",
+                    "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "643e6d74-d96c-45d1-af2d-53390850eebf"
+                }
+            }
+        }
+    }
+}
