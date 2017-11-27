@@ -9,7 +9,19 @@ A. When copy/pasting anything from the console (ie. MediaLive Role ARN, MediaPac
 
 A. You might be using the MediaPackage’s Input URL instead of the Endpoint URL. For playback, you want to use the Endpoint URL.
 
+
 **Q. VOD playback doesn't work. Player just spins or starts from the live edge.**
 
 A. The ISO timestamp you entered for the Start or End time might be in the wrong format. Make sure it's in the following format: *YYYY-MM-DDTHH:MM:SS.SSSZ*.
+
+
+**Q. I can't delete my AWS Elemental MediaLive input.** 
+
+A. Your input is still attached to a channel. You must first delete the channel before you can delete the input. 
+
+
+**Q. I can't delete my AWS Elemental MediaLive channel.**
+
+A. Your channel is still in a running state. You must first stop the channel before you can delete it. 
+
 

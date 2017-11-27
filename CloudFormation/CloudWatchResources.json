@@ -45,6 +45,7 @@
         "LiveStreamingWorkshopDashboard": {
             "Type": "AWS::CloudWatch::Dashboard",
             "Properties": {
+                "DashboardName": {"Ref" : "DashboardName"},                
                 "DashboardBody": { "Fn::Sub" : "{\"widgets\": [{\"type\": \"metric\",\"x\": 0,\"y\": 0,\"width\": 24,\"height\": 6,\"properties\": {\"view\": \"timeSeries\",\"stacked\": false,\"region\": \"${AWS::Region}\",\"metrics\": [[ \"MediaLive\", \"NetworkOut\", \"ChannelId\", \"${MediaLiveChannelId}\", \"Pipeline\", \"0\", { \"stat\": \"Sum\" } ],[ \"...\", \"1\", { \"stat\": \"Sum\" } ]],\"title\": \"MediaLive Channel Network Out\",\"period\": 300}},{\"type\": \"metric\",\"x\": 0,\"y\": 6,\"width\": 24,\"height\": 6,\"properties\": {\"period\": 300,\"stat\": \"Average\",\"start\": \"-PT1H\",\"end\": \"P0D\",\"title\": \"MediaPackage Egress Bytes\",\"region\":\"${AWS::Region}\",\"view\": \"timeSeries\",\"stacked\": false,\"metrics\": [[ \"AWS/MediaPackage\", \"EgressBytes\", \"Channel\", \"${MediaPackageChannelId}\", \"OriginEndpoint\", \"${MediaPackageEndpointId}\", { \"stat\": \"Sum\", \"period\": 60 } ]]}}]}"}
              },
             "Metadata": {
@@ -119,6 +120,10 @@
         }
     },
     "Parameters": {
+        "DashboardName": {
+            "Description": "The CloudWatch Dashboard Name",
+            "Type": "String"
+        },        
         "MediaLiveChannelId": {
             "Description": "MediaLive Channel ID",
             "Type": "String"
@@ -130,6 +135,14 @@
         "MediaPackageEndpointId": {
             "Type": "String",
             "Description": "MediaPackage Origin Endpoint ID"
+        }
+    },
+    "Outputs": {
+        "CloudWatchDashboard": {
+            "Value": {
+                "Fn::Sub" : "https://${AWS::Region}.console.aws.amazon.com/cloudwatch/home#dashboards:name=${DashboardName}"
+            },
+            "Description": "Dashboard created to monitor a MediaLive ingest channel and MediaPackage origin endpoint"
         }
     }
 }
