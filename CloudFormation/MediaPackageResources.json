@@ -214,6 +214,9 @@
                         "MediaPackageChannelResource",
                         "Arn"
                     ]
+                },
+                "StackName": {
+                    "Ref": "AWS::StackName"
                 }
             },
             "Metadata": {
@@ -230,6 +233,9 @@
                         "MediaPackageChannelResource",
                         "Arn"
                     ]
+                },
+                "StackName": {
+                    "Ref": "AWS::StackName"
                 }
             },
             "Metadata": {
@@ -283,6 +289,9 @@
                 },
                 "ChannelId": {
                     "Ref": "MediaPackagePrimaryChannel"
+                },
+                "StackName": {
+                    "Ref": "AWS::StackName"
                 }
             },
             "Metadata": {
@@ -302,6 +311,9 @@
                 },
                 "ChannelId": {
                     "Ref": "MediaPackagePrimaryChannel"
+                },
+                "StackName": {
+                    "Ref": "AWS::StackName"
                 }
             },
             "Metadata": {
@@ -355,6 +367,9 @@
                 },
                 "ChannelId": {
                     "Ref": "MediaPackageSecondaryChannel"
+                },
+                "StackName": {
+                    "Ref": "AWS::StackName"
                 }
             },
             "Metadata": {

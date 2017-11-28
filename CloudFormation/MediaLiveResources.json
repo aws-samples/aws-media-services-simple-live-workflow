@@ -258,6 +258,9 @@
                 },
                 "HLSSecondarySource": {
                     "Ref": "HLSSecondarySource"
+                },
+                "StackName": {
+                    "Ref": "AWS::StackName"
                 }
             },
             "Metadata": {
@@ -328,6 +331,9 @@
                 },
                 "PackagerSecondaryChannelUsername": {
                     "Ref": "PackagerSecondaryChannelUsername"
+                },
+                "StackName": {
+                    "Ref": "AWS::StackName"
                 }
             },
             "Metadata": {

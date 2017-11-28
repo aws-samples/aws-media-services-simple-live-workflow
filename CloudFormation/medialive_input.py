@@ -47,11 +47,8 @@ def create_input(medialive, event, context, auto_id=True):
     Create a MediaLive input
     """
 
-    input_uniq = resource_tools.id_generator()
-
     if auto_id:
-        input_id = "%s-%s-%s" % (resource_tools.stack_name(
-            event['StackId']), event["LogicalResourceId"], input_uniq)
+        input_id = "%s-%s" % (resource_tools.stack_name(event), event["LogicalResourceId"])
     else:
         input_id = event["PhysicalResourceId"]
 

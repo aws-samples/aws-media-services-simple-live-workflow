@@ -50,14 +50,9 @@ def send(event, context, responseStatus, responseData, physicalResourceId):
     return
 
 
-def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
-
-
-def stack_name(stackArn):
-    matcher = re.search('\:stack\/([^\-]+)\-', stackArn)
+def stack_name(event):
     try:
-        response = matcher.group(1)
+        response = event['ResourceProperties']['StackName']
     except Exception:
         response = None
     return response
