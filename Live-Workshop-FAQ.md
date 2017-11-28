@@ -1,6 +1,4 @@
-# AWS Live Streaming and Live-to-VOD Workshop FAQ:
-
-## AWS IAM
+# AWS Live Streaming and Live-to-VOD Workshop FAQ
 
 ## AWS MediaLive
 
