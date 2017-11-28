@@ -19,7 +19,7 @@ This workshop includes an optional module for configuring AWS CloudWatch Metrics
 
 # AWS CloudFormation Templates
 
-CloudFormation templates are available if you would like to move faster or see the intended outcome of a single module or the entire lab. Resources created by AWS CloudFormation will have unique naming patterns so that the same template can be used multiple times in teh same account and region without conflicting resource names. Resource names are prefixed with the stack name, template name, a short random string, and followed by the resource name. See the following example for a AWS Elemental MediaLive channel created with these templates. The stack name **FRI** specified by the user is prefixed to the channel name.
+CloudFormation templates are available if you would like to move faster or see the intended outcome of a single module or the entire lab. Resources created by AWS CloudFormation will have unique naming patterns so that the same template can be used multiple times in teh same account and region without conflicting resource names. Resource names are prefixed with the stack name, template name, a short random string, and followed by the resource name. See the following example for AWS Elemental MediaLive channels created with these templates. The stack names **CHAN05** and **CHAN07** are specified by the user and prefixed to the channel name. The CloudFormation template name is also included in the naming.
 
 ![alt](cfn-resource-naming.png)
 
