@@ -9,6 +9,10 @@ CloudFormation templates are available if you would like to move faster or see t
 
 The CloudFormation templates rely on permissions necessary to create and configure the AWS Cloud services from each module. These are the same permission you will need to perform the creation and configuration of the AWS Cloud services manually.
 
+### Hosting
+
+The current templates can be downloaded here and run individually. They can also be run from the hosted location within AWS using the links below. The main template named LiveStreamingWorkshopResources.json includes hosted links to the subordinate templates. If you plan to fork and modify these templates, you will need to consider hosting them to take advantage of the nesting.
+
 ## Templates
 
 **These templates are supported in regions: us-west-2, us-east-1, and eu-west-1.**
