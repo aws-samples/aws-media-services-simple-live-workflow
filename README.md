@@ -19,13 +19,13 @@ This workshop includes an optional module for configuring AWS CloudWatch Metrics
 
 # AWS CloudFormation Templates
 
-CloudFormation templates are available if you would like to move faster or see the intended outcome of a single module or the entire lab. Following are links to CloudFormation templates for each module of the workshop. **Copy the link address and use that with CloudFormation to create the module contents in your account.** You may need to enter information into the CloudFormation template about resources created in previous modules. If you are not familiar with AWS CloudFormation, review the online [User Guide](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html). 
-
-Cloud resources created by AWS CloudFormation will have unique naming patterns, usually prefixed with the stack name and appended with a short random string. See the following example for a AWS Elemental MediaLive channel created with these templates. The stack name **FRI** specified by the user is prefixed to the channel name.
+CloudFormation templates are available if you would like to move faster or see the intended outcome of a single module or the entire lab. Resources created by AWS CloudFormation will have unique naming patterns, usually prefixed with the stack name, a short random string, followed by the resource name. See the following example for a AWS Elemental MediaLive channel created with these templates. The stack name **FRI** specified by the user is prefixed to the channel name.
 
 ![alt](cfn-resource-naming.png)
 
 Keep this convention in mind when locating resources created with these templates.
+
+Following are links to CloudFormation templates for each module of the workshop. **Copy the link address and use that with CloudFormation to create the module contents in your account.** You may need to enter information into the CloudFormation template about resources created in previous modules. If you are not familiar with AWS CloudFormation, review the online [User Guide](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html). 
 
 **These templates are supported in regions: us-west-2, us-east-1, and eu-west-1.**
 
