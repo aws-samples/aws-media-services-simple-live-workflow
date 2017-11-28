@@ -15,6 +15,7 @@ import json
 import string
 import random
 import re
+import time
 
 
 def send(event, context, responseStatus, responseData, physicalResourceId):
@@ -56,3 +57,20 @@ def stack_name(event):
     except Exception:
         response = None
     return response
+
+
+def wait_for_channel_states(medialive, channel_id, states):
+    current_state = ''
+    while current_state not in states:
+        time.sleep(5)
+        current_state = medialive.describe_channel(
+            ChannelId=channel_id)['State']
+    return current_state
+
+
+def wait_for_input_states(medialive, input_id, states):
+    current_state = ''
+    while current_state not in states:
+        time.sleep(5)
+        current_state = medialive.describe_input(InputId=input_id)['State']
+    return current_state

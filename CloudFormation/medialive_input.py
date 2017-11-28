@@ -48,7 +48,8 @@ def create_input(medialive, event, context, auto_id=True):
     """
 
     if auto_id:
-        input_id = "%s-%s" % (resource_tools.stack_name(event), event["LogicalResourceId"])
+        input_id = "%s-%s" % (resource_tools.stack_name(event),
+                              event["LogicalResourceId"])
     else:
         input_id = event["PhysicalResourceId"]
 
@@ -63,6 +64,9 @@ def create_input(medialive, event, context, auto_id=True):
         )
 
         print(json.dumps(response))
+
+        # wait for the new input to reach detached state
+        resource_tools.wait_for_input_states(medialive, response['Input']['Id'], ['DETACHED'])
 
         result = {
             'Status': 'SUCCESS',
@@ -114,7 +118,9 @@ def delete_input(medialive, event, context):
     input_id = event["PhysicalResourceId"]
 
     try:
-        response = medialive.delete_input(InputId=input_id)
+        # wait for the input to be detached
+        resource_tools.wait_for_input_states(medialive, input_id, ['DETACHED'])
+        medialive.delete_input(InputId=input_id)
         result = {
             'Status': 'SUCCESS',
             'Data': {},

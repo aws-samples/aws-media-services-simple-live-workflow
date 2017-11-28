@@ -71,7 +71,7 @@ def create_channel(medialive, event, context, auto_id=True):
         }
 
         # wait untl the channel is idle, otherwise the lambda will time out
-        wait_for_channel_states(medialive, channel_id, ['IDLE'])
+        resource_tools.wait_for_channel_states(medialive, channel_id, ['IDLE'])
         medialive.start_channel(ChannelId=channel_id)
 
     except Exception as ex:
@@ -121,7 +121,7 @@ def delete_channel(medialive, event, context):
         # stop the channel
         medialive.stop_channel(ChannelId=channel_id)
         # wait untl the channel is idle, otherwise the lambda will time out
-        wait_for_channel_states(medialive, channel_id, ['IDLE'])
+        resource_tools.wait_for_channel_states(medialive, channel_id, ['IDLE'])
 
     except Exception as ex:
         # report it and continue
@@ -365,10 +365,3 @@ def create_live_channel(input_id, channel_name, layers, destinations, arn, media
     # return 'true'
 
 
-def wait_for_channel_states(medialive, channel_id, states):
-    current_state = ''
-    while current_state not in states:
-        time.sleep(5)
-        current_state = medialive.describe_channel(
-            ChannelId=channel_id)['State']
-    return current_state
