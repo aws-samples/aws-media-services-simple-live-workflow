@@ -167,6 +167,41 @@
                     "id": "d0e73ea0-b8e8-4667-a5af-e8c6fa42058a"
                 }
             }
+        },
+        "CloudWatchModuleStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/CloudWatchResources.json",
+                "TimeoutInMinutes": 5,
+                "Parameters": {
+                    "DashboardName": {
+                        "Ref": "DashboardName"
+                    },
+                    "MediaPackageChannelId": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.MediaPackagePrimaryChannelID"
+                        ]
+                    },
+                    "MediaPackageEndpointId": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.MediaPackagePrimaryLiveEndpointId"
+                        ]
+                    },
+                    "MediaLiveChannelId": {
+                        "Fn::GetAtt": [
+                            "MediaLiveModuleStack",
+                            "Outputs.MediaLiveChannelId"
+                        ]
+                    }
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "d0e73ea0-b8e8-4667-a5af-e8c6fa42058a"
+                }
+            }
         }
     },
     "Parameters": {
@@ -205,6 +240,15 @@
                 "Fn::GetAtt": [
                     "MediaPackageModuleStack",
                     "Outputs.MediaPackageSecondaryChannelLiveEndpointUrl"
+                ]
+            },
+            "Description": "URL for the secondary channel live origin endpoint"
+        },
+        "CloudwatchDashboard": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "CloudWatchModuleStack",
+                    "Outputs.CloudWatchDashboard"
                 ]
             },
             "Description": "URL for the secondary channel live origin endpoint"
