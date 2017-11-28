@@ -175,7 +175,14 @@
                 "TimeoutInMinutes": 5,
                 "Parameters": {
                     "DashboardName": {
-                        "Ref": "DashboardName"
+                        "Fn::Join": [
+                            "-", [
+                                {
+                                "Ref": "AWS::StackName"
+                                } ,
+                               "CloudWatchIngestAndEgressDashboard"
+                            ]
+                        ]
                     },
                     "MediaPackageChannelId": {
                         "Fn::GetAtt": [
@@ -244,14 +251,14 @@
             },
             "Description": "URL for the secondary channel live origin endpoint"
         },
-        "CloudwatchDashboard": {
+        "CloudWatchDashboard": {
             "Value": {
                 "Fn::GetAtt": [
                     "CloudWatchModuleStack",
                     "Outputs.CloudWatchDashboard"
                 ]
             },
-            "Description": "URL for the secondary channel live origin endpoint"
+            "Description": "Dashboard created to monitor a MediaLive ingest channel and MediaPackage origin endpoint"
         }
     }
 }
