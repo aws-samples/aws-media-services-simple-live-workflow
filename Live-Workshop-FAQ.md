@@ -24,4 +24,8 @@ A. Your input is still attached to a channel. You must first delete the channel 
 
 A. Your channel is still in a running state. You must first stop the channel before you can delete it. 
 
+**Q. I can't delete my AWS Elemental MediaPackage channel.**
+
+A. Delete all origin endpoints from the channel before deleting the channel.
+
 
