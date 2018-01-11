@@ -68,7 +68,7 @@ def create_endpoint(mediapackage, event, context, auto_id=True):
                 "SegmentDurationSeconds": 6,
                 "PlaylistWindowSeconds": 60,
                 "PlaylistType": "event",
-                "AdMarkers": "none",
+                "AdMarkers": "SCTE35_ENHANCED",
                 "IncludeIframeOnlyStream": True,
                 "UseAudioRenditionGroup": True,
                 "StreamSelection": {
