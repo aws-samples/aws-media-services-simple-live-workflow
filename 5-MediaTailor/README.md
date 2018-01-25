@@ -149,7 +149,9 @@ concatenated with the **manifest filename of your MediaPackage playback endpoint
 ## Completion
 
 Congratulations! You've successfully integrated your streaming video with AWS Elemental MediaTailor. In addition, you have successfully integrated MediaTailor with Amazon CloudFront. 
- 
+
+Return to the [main](../README.md) page.
+
 ## Cloud Resource Clean Up
 
 ### AWS Elemental MediaTailor
