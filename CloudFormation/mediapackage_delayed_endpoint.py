@@ -70,7 +70,7 @@ def create_endpoint(mediapackage, event, context, auto_id=True):
                 "PlaylistType": "event",
                 "AdMarkers": "none",
                 "IncludeIframeOnlyStream": True,
-                "UseAudioRenditionGroup": True,
+                "UseAudioRenditionGroup": False,
                 "StreamSelection": {
                     "StreamOrder": "original"
                 }
