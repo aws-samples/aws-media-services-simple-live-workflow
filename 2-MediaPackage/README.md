@@ -85,6 +85,8 @@ You will create a total of three origin endpoints in this section of the module.
 
 5. Check the **Startover window** and set the maximum time to **3600**. This setting will allow a viewer to replay up to 3600 seconds (1 hour) past of streaming video using special parameters.
 
+6. Under **Packager settings**, **Additional configuration**, enable **Ad Markers** by selecting **SCTE-35 enchanced** from the dropdown.
+
 7. Leave all other settings at the default. See the following image for sample inputs for the page.
 
 ![alt](create-endpoint.png)

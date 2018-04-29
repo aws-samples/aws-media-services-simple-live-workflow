@@ -13,10 +13,7 @@
                     "y": 100
                 },
                 "z": 0,
-                "embeds": [],
-                "isrelatedto": [
-                    "78524ead-765b-48ea-96e7-2ede276045f3"
-                ]
+                "embeds": []
             },
             "78524ead-765b-48ea-96e7-2ede276045f3": {
                 "size": {
@@ -28,10 +25,7 @@
                     "y": 150
                 },
                 "z": 0,
-                "embeds": [],
-                "isrelatedto": [
-                    "5667aa1c-1a73-4a13-a394-27f9c5cc6e06"
-                ]
+                "embeds": []
             },
             "5667aa1c-1a73-4a13-a394-27f9c5cc6e06": {
                 "size": {
@@ -46,9 +40,6 @@
                 "embeds": [],
                 "isassociatedwith": [
                     "78524ead-765b-48ea-96e7-2ede276045f3"
-                ],
-                "isrelatedto": [
-                    "5667aa1c-1a73-4a13-a394-27f9c5cc6e06"
                 ]
             },
             "913522a6-15f8-4e9b-b6a6-da4016be5de8": {
@@ -61,10 +52,7 @@
                     "y": 310
                 },
                 "z": 0,
-                "embeds": [],
-                "isrelatedto": [
-                    "78524ead-765b-48ea-96e7-2ede276045f3"
-                ]
+                "embeds": []
             },
             "479c1480-a5bd-4fcf-be6f-4005546d4f4c": {
                 "size": {
@@ -76,10 +64,7 @@
                     "y": 100
                 },
                 "z": 0,
-                "embeds": [],
-                "isrelatedto": [
-                    "ae5e1cda-190b-4a5b-ba7f-a15f86496c0d"
-                ]
+                "embeds": []
             },
             "1a114d16-d224-4a22-bf4d-7b6461846c23": {
                 "size": {
@@ -115,11 +100,7 @@
                     "y": 310
                 },
                 "z": 0,
-                "embeds": [],
-                "isrelatedto": [
-                    "913522a6-15f8-4e9b-b6a6-da4016be5de8",
-                    "479c1480-a5bd-4fcf-be6f-4005546d4f4c"
-                ]
+                "embeds": []
             }
         }
     },
@@ -130,7 +111,8 @@
                 "Code": {
                     "S3Bucket": {
                         "Fn::Join": [
-                            "-", [
+                            "-",
+                            [
                                 "rodeolabz",
                                 {
                                     "Ref": "AWS::Region"
@@ -166,17 +148,19 @@
                 ],
                 "AssumeRolePolicyDocument": {
                     "Version": "2012-10-17",
-                    "Statement": [{
-                        "Effect": "Allow",
-                        "Principal": {
-                            "Service": [
-                                "lambda.amazonaws.com"
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
                             ]
-                        },
-                        "Action": [
-                            "sts:AssumeRole"
-                        ]
-                    }]
+                        }
+                    ]
                 },
                 "Path": "/"
             },
@@ -191,18 +175,22 @@
             "Properties": {
                 "PolicyDocument": {
                     "Version": "2012-10-17",
-                    "Statement": [{
-                        "Effect": "Allow",
-                        "Action": [
-                            "medialive:*"
-                        ],
-                        "Resource": "*"
-                    }]
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "medialive:*"
+                            ],
+                            "Resource": "*"
+                        }
+                    ]
                 },
                 "PolicyName": "MediaLiveSimpleStreamingWorkflow",
-                "Roles": [{
-                    "Ref": "MediaLiveResourceRole"
-                }]
+                "Roles": [
+                    {
+                        "Ref": "MediaLiveResourceRole"
+                    }
+                ]
             },
             "Metadata": {
                 "AWS::CloudFormation::Designer": {
@@ -216,7 +204,8 @@
                 "Code": {
                     "S3Bucket": {
                         "Fn::Join": [
-                            "-", [
+                            "-",
+                            [
                                 "rodeolabz",
                                 {
                                     "Ref": "AWS::Region"
@@ -345,12 +334,12 @@
     },
     "Parameters": {
         "HLSPrimarySource": {
-            "Default": "http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/sdr_uncage_vanlife.m3u8",
+            "Default": "http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/withad/sdr_uncage_vanlife_admarker_60sec.m3u8",
             "Description": "URL of the primary HLS pull source",
             "Type": "String"
         },
         "HLSSecondarySource": {
-            "Default": "http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/sdr_uncage_vanlife.m3u8",
+            "Default": "http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/withad/sdr_uncage_vanlife_admarker_60sec.m3u8",
             "Description": "URL of the secondary HLS pull source",
             "Type": "String"
         },

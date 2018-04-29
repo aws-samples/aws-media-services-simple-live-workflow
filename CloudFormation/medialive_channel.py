@@ -189,7 +189,6 @@ def get_video_description(w, h, b, n):
 def get_output(n):
     output = {
         'OutputSettings': {
-
             'HlsOutputSettings': {
                 'NameModifier': '_' + str(n),
                 'HlsSettings': {
@@ -204,7 +203,7 @@ def get_output(n):
                             'PmtPid': '480',
                             'ProgramNum': 1,
                             'Scte35Pid': '500',
-                            'Scte35Behavior': 'NO_PASSTHROUGH',
+                            'Scte35Behavior': 'PASSTHROUGH',
                             'TimedMetadataBehavior': 'NO_PASSTHROUGH',
                             'VideoPid': '481'
                         },
@@ -328,6 +327,9 @@ def create_live_channel(input_id, channel_name, layers, destinations, arn, media
                             'HlsCdnSettings': {
                                 'HlsWebdavSettings': {}
                             },
+                            "AdMarkers": [
+                            "ELEMENTAL_SCTE35"
+                            ],
                             'IvInManifest': 'INCLUDE',
                             'IvSource': 'FOLLOWS_SEGMENT_NUMBER',
                             'ClientCache': 'ENABLED',
