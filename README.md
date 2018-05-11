@@ -1,3 +1,8 @@
+# Prefix
+
+This is a sample change.
+Another change.
+
 # AWS Live Streaming and Live-to-VOD Workshop
 
 This workshop guides the student through creation of a streaming video workflow using an encoder in the cloud to produce adaptive bitrate (ABR) content and a packager to deliver the ABR streams to one or more viewers, including mobile devices and desktop browsers. This workshop includes a browser page configured as a simple client viewer, which the student can customize with their own streaming media and take advantage of live and delayed playback, and restart capabilities of the packager and player to replay portions of the video.
