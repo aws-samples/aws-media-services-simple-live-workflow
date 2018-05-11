@@ -27,7 +27,7 @@ The current templates can be downloaded here and run individually. They can also
 
 - **Browser Page** (not applicable)
 
-- **AWS Elemental MediaTailor** (not applicable)
+- [**AWS Elemental MediaTailor**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/CreateCloudfrontDistribution.json) - This template only automates the creation of CloudFront for MediaTailor. This does **not** automate the MediaTailor configuration creation. 
 
 - [**Extra: AWS CloudWatch**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/CloudWatchResources.json)
 
