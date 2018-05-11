@@ -159,3 +159,5 @@ Select the configuration you created and hit the **Delete** button to clean up y
 
 ### Amazon CloudFront
 Select the distribution that you created and hit the **Disable** button. Once the distribution's **State** reflects Disabled, select the same distribution and hit the **Delete** button. 
+
+### CloudFormation template provided called CreateCloudfrontDistribution.json
