@@ -1,0 +1,134 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+	"Parameters" : {
+		"MediaTailorURL" : {
+			"Default" : "",
+			"Description" : "MediaTailor URL without HTTPS://",
+			"Type" : "String"
+		},
+		"MediaPackageURL" : {
+			"Default" : "",
+			"Description" : "MediaPackage URL without HTTPS://",
+			"Type" : "String"
+		}
+	},
+    "Resources" : {
+        "CosmosCloudFront" : {
+            "Type" : "AWS::CloudFront::Distribution",
+            "Properties" : {
+                    "DistributionConfig": {
+        "Comment": "", 
+        "CacheBehaviors": [ 
+                { 
+                    "TargetOriginId": "MediaPackage", 
+                    "ViewerProtocolPolicy": "allow-all", 
+                    "ForwardedValues": {
+                        "Cookies": {
+                            "Forward": "none"
+                        }, 
+
+                        "QueryString": true
+                    }, 
+                    "MaxTTL": 31536000, 
+                    "PathPattern": "/out/v1/*", 
+                    "SmoothStreaming": false, 
+                    "DefaultTTL": 86400, 
+                    "AllowedMethods": ["HEAD","GET"],
+                    "MinTTL": 0, 
+                    "Compress": false
+                }, 
+                { 
+ 
+                    "TargetOriginId": "MediaTailor", 
+                    "ViewerProtocolPolicy": "allow-all", 
+                    "ForwardedValues": {
+
+                        "Cookies": {
+                            "Forward": "none"
+                        }, 
+
+                        "QueryString": true
+                    }, 
+                    "MaxTTL": 31536000, 
+                    "PathPattern": "/v1/*", 
+                    "SmoothStreaming": false, 
+                    "DefaultTTL": 86400, 
+                    "AllowedMethods": ["HEAD","GET"], 
+                    "CachedMethods": ["HEAD", "GET"],
+                    "MinTTL": 0, 
+                    "Compress": false
+                }
+ 
+		], 
+
+        "WebACLId": "", 
+        "Origins": [ 
+                {
+                    "OriginPath": "", 
+                    "CustomOriginConfig": {
+                        "OriginProtocolPolicy": "https-only", 
+                        "OriginReadTimeout": 30, 
+                        "HTTPPort": 80, 
+                        "HTTPSPort": 443, 
+                        "OriginKeepaliveTimeout": 5
+                    }, 
+                    "Id": "MediaPackage", 
+                    "DomainName":  { "Ref" : "MediaPackageURL" }
+                }, 
+                {
+                    "OriginPath": "", 
+                    "CustomOriginConfig": {
+                        "OriginProtocolPolicy": "https-only", 
+                        "OriginReadTimeout": 30, 
+                        "HTTPPort": 80, 
+                        "HTTPSPort": 443, 
+                        "OriginKeepaliveTimeout": 5
+                    },  
+                    "Id": "AdvertisementService", 
+                    "DomainName": "ads.mediatailor.us-east-1.amazonaws.com"
+                }, 
+                {
+                    "OriginPath": "", 
+                    "CustomOriginConfig": { 
+                        "OriginProtocolPolicy": "https-only", 
+                        "OriginReadTimeout": 30, 
+                        "HTTPPort": 80, 
+                        "HTTPSPort": 443, 
+                        "OriginKeepaliveTimeout": 5
+                    },  
+                    "Id": "MediaTailor", 
+                    "DomainName":  { "Ref" : "MediaTailorURL" }
+                }
+
+		],
+		
+        "DefaultRootObject": "", 
+        "PriceClass": "PriceClass_100", 
+        "Enabled": true, 
+        "DefaultCacheBehavior": {
+            "TargetOriginId": "AdvertisementService", 
+            "ViewerProtocolPolicy": "allow-all", 
+            "ForwardedValues": {
+                "Cookies": {
+                    "Forward": "none"
+                }, 
+
+                "QueryString": true
+            }, 
+            "MaxTTL": 31536000, 
+            "SmoothStreaming": false, 
+            "DefaultTTL": 86400, 
+            "AllowedMethods": ["HEAD","GET"], 
+            "CachedMethods": ["HEAD", "GET"], 
+            "MinTTL": 0, 
+            "Compress": false
+        }, 
+        "ViewerCertificate": {
+            "CloudFrontDefaultCertificate": true
+        }, 
+        "HttpVersion": "http2"
+    }
+            }
+        }
+    }
+}
