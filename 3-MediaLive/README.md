@@ -29,9 +29,9 @@ Before you can create a AWS Elemental MediaLive channel, you must first create a
 	![alt](HLSInput.png)
 
 
-1. Under Input Sources, use `http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/withad/sdr_uncage_vanlife_admarker_60sec.m3u8` for **Source A**'s Source URL of the stream.
+1. Under Input Sources, use `http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/withad/sdr_uncage_vanlife_admarker_60sec.m3u8` for **Input source A**'s Source URL of the stream.
 
-1. Enter the same URL for **Source B**.
+1. Enter the same URL for **Input source B**.
 
 1. Click **Create**.
 
@@ -50,19 +50,44 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 
 1. Under **General Info**, enter `HLS Stream Channel` for **Channel Name**.
 
-1. Copy and paste the Role ARN you saved off while working on the IAM module into the **IAM role ARN**. 
+1. For the **IAM Role**, use the default option **Use existing role**. In the dropdown, select the role ARN that was created while working on the IAM module. 
 
-1. Click on **Attach Input** and select the input (`HLS Input`) you created from the **Input** dropdown. 
+1. On the left navigation pane, under **Input attachments**, click on **Add**.
 
-1. Scroll down to **Input Settings**.  Set **Source End Behavior** to `Loop`.
+1. Under **Input**, choose the HLS Input you created earlier. Click on **Confirm**.
+
+1. Scroll down to **General Input Settings**.  Set **HLS Input Settings** from HLS input to **Don't include**.
+
+1. Set **Source End Behavior** to `Loop`.
+
+	![alt](InputSettings.png)
 
 1. On the left navigation pane, under **Output Groups** click on **Add**.
 
 	![alt](MediaLiveOutputGroup.png)
 
-1. Under **Add Output Group**, leave the selection to **HLS**. 
+1. Under **Add Output Group**, use the selected default option **HLS**. 
 
 1. Click on **Confirm**.
+
+1. Under **HLS group destination A**:
+	1. Enter the URL of the first MediaPackage ingest endpoint you created in the **URL** textbox.
+	1. Expand the **Credentials (optional)** settings. For **Username**, paste the username that goes with the Mediapackage endpoint you provided. 
+	1. Under **Password**, select **Create parameter**. 
+	1. For **Name**, enter `MediaPackage_HLS_Push_1`. 
+	1. For **Password**, enter the corresponding password of the username for the Mediapackage endpoint you provided.
+	1. Click on **Create Parameter**. 
+
+	![alt](HLSDestinations.png)
+
+
+1. Under **HLS group destination B**:
+	1. Enter the URL of the second MediaPackage ingest endpoint you created in the **URL** textbox.
+	1. Expand the **Credentials (optional)** settings. For **Username**, paste the username that goes with the Mediapackage endpoint you provided. 
+	1. Under **Password**, select **Create parameter**. 
+	1. For **Name**, enter `MediaPackage_HLS_Push_2`. 
+	1. For **Password**, enter the corresponding password of the username for the Mediapackage endpoint you provided.
+	1. Click on **Create Parameter**. 
 
 1. Under **HLS Settings**, enter `HLS Stream` for **Name**.
 
@@ -70,27 +95,11 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 
 	![alt](HLSSettings.png)
 
-
-1. Under **Destination A URL**:
-	1. Enter the URL of the first MediaPackage ingest endpoint you created.
-	1. Expand the **Credentials (optional)** settings. For **Username**, paste the username that goes with the Mediapackage endpoint you provided. 
-	1. Leave the option to **Create new parameter** selected. For **Name**, enter `MediaPackage_HLS_Push_1`. For **Password**, enter the corresponding password of the username for the Mediapackage endpoint you provided.
-	1. Click on **Create New Parameter**. 
-
-	![alt](HLSDestinations.png)
-
-
-1. Under **Destination B URL**:
-	1.  enter the URL of the second MediaPackage ingest endpoint you created.
-	1. Expand the **Credentials (optional)** settings. For **Username**, paste the username that goes with the Mediapackage endpoint you provided. 
-	1. Leave the option to **Create new parameter** selected. For **Name**, enter `MediaPackage_HLS_Push_2`. For **Password**, enter the corresponding password of the username for the Mediapackage endpoint you provided.
-	1. Click on **Create New Parameter**. 
-
 1. Scroll down and expand the **Manifest and Segments** section. Change the default **Segment Length** from `10` to `6`.
 
 1. Scroll down and expand the **Ad Markers** section. Click on **Add ad markers**. Select **ELEMENTAL_SCTE35** from the Hls Ad Markers dropdown. 
 
-1. Under the **HLS Outputs**, click on **Add Output** twice. This will add two more outputs, for a total of three. Leave the **Name Modifier** as is.
+1. Scroll back up to **HLS Outputs**, and click on **Add Output** twice. This will add two more outputs, for a total of three. Leave the **Name Modifier** as is.
 
 	![alt](HLSOutputs.png)
 
