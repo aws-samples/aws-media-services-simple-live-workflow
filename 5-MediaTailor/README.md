@@ -1,5 +1,5 @@
 # AWS Elemental MediaTailor
-This lab will take you through setting up MediaTailor using other AWS Elemental products like MediaLive and MediaPackage. Once you've completed that, the lab also provides steps on how to integrate MediaTailor with AWS CloudFront.
+This lab will take you through setting up MediaTailor using other AWS Elemental products like MediaLive and MediaPackage. Once you've completed that, the lab also provides steps on how to integrate MediaTailor with Amazon CloudFront.
 	
 ![alt](EMTDiagram.png)
 
@@ -7,7 +7,7 @@ This lab will take you through setting up MediaTailor using other AWS Elemental 
 This lab assumes that you have the following:
 1. An AWS Elemental MediaLive channel set up to pass through SCTE-35 and pushing content to MediaPackage. Input to the channel must contain SCTE-35 Ad markers. 
 1. An AWS Elemental MediaPackage channel set up to receive streams from MediaLive. The channel must have an Endpoint setup that has Ad Markers enabled. The Endpoint URL is needed to integrate with both MediaTailor and Cloudfront. 
-1. An Ad Decision Server (ADS), or you may use a static VAST response XML hosted on a server. For this exercise, you will use a static VAST response XML hosted in S3. 
+1. An Ad Decision Server (ADS). You may use a sample static VAST response XML or a free VAST tag from a commercial ADS like [DoubleClick for Publishers (DFP) by Google](https://developers.google.com/interactive-media-ads/docs/sdks/html5/tags). 
 
 ### Previous Modules
 
@@ -29,7 +29,12 @@ This module relies on the configuration of AWS Elemental MediaLive and AWS Eleme
 
 	![alt](MediaPackageEndpointURL.png)
 
-1. Enter `http://d2qohgpffhaffh.cloudfront.net/MediaTailor/VASTDemo.xml` for the **Ad decision server**. 
+1. For the **Ad decision server**, you may enter our hosted sample static VAST response: 	http://d2qohgpffhaffh.cloudfront.net/MediaTailor/VASTDemo.xml
+
+	Or use one of the published VAST tags from DFP like the Single Inline Linear tag:
+
+	https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=[avail.random]
+
 
 	![alt](MediaTailorConfig.png)
 
