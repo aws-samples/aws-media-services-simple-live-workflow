@@ -38,7 +38,7 @@ Before you can create a AWS Elemental MediaLive channel, you must first create a
 
 ### 2. Create an AWS Elemental MediaLive Channel
 
-You will now create an AWS Elemental MediaLive Channel that will publish to the MediaPackage endpoints you created in a previous module. The channel will use the input you created in the previous step.
+You will now create an AWS Elemental MediaLive Channel that will publish to the MediaPackage channel you created in a previous module. The MediaLive channel will use the input you created in the previous step.
 
 **Step-by-step instructions**
 
@@ -56,11 +56,7 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 
 1. Under **Input**, choose the HLS Input you created earlier. Click on **Confirm**.
 
-1. Scroll down to **General Input Settings**.  Set **HLS Input Settings** from HLS input to **Don't include**.
-
-1. Set **Source End Behavior** to `Loop`.
-
-	![alt](InputSettings.png)
+1. Scroll down to **General Input Settings**.  Set **Source End Behavior** to `Loop`.
 
 1. On the left navigation pane, under **Output Groups** click on **Add**.
 
@@ -71,22 +67,22 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 1. Click on **Confirm**.
 
 1. Under **HLS group destination A**:
-	1. Enter the URL of the first MediaPackage ingest endpoint you created in the **URL** textbox.
-	1. Expand the **Credentials (optional)** settings. For **Username**, paste the username that goes with the Mediapackage endpoint you provided. 
+	1. In the **URL** textbox, enter the primary input URL of the MediaPackage channel you created previously.
+	1. Expand the **Credentials (optional)** settings. For **Username**, paste the username that goes with the Mediapackage input URL you provided. 
 	1. Under **Password**, select **Create parameter**. 
 	1. For **Name**, enter `MediaPackage_HLS_Push_1`. 
-	1. For **Password**, enter the corresponding password of the username for the Mediapackage endpoint you provided.
+	1. For **Password**, enter the corresponding password of the username for the Mediapackage input URL you provided.
 	1. Click on **Create Parameter**. 
 
 	![alt](HLSDestinations.png)
 
 
 1. Under **HLS group destination B**:
-	1. Enter the URL of the second MediaPackage ingest endpoint you created in the **URL** textbox.
-	1. Expand the **Credentials (optional)** settings. For **Username**, paste the username that goes with the Mediapackage endpoint you provided. 
+	1. In the **URL** textbox, enter the secondary input URL of the MediaPackage channel you created previously.
+	1. Expand the **Credentials (optional)** settings. For **Username**, paste the username that goes with the Mediapackage input URL you provided. 
 	1. Under **Password**, select **Create parameter**. 
 	1. For **Name**, enter `MediaPackage_HLS_Push_2`. 
-	1. For **Password**, enter the corresponding password of the username for the Mediapackage endpoint you provided.
+	1. For **Password**, enter the corresponding password of the username for the Mediapackage input URL you provided.
 	1. Click on **Create Parameter**. 
 
 1. Under **HLS Settings**, enter `HLS Stream` for **Name**.

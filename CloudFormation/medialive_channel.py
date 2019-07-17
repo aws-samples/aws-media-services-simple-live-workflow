@@ -334,7 +334,7 @@ def create_live_channel(input_id, channel_name, layers, destinations, arn, media
                             'IvSource': 'FOLLOWS_SEGMENT_NUMBER',
                             'ClientCache': 'ENABLED',
                             'TsFileMode': 'SEGMENTED_FILES',
-                            'ManifestDurationFormat':  'INTEGER',
+                            'ManifestDurationFormat': 'FLOATING_POINT',
                             'SegmentationMode': 'USE_SEGMENT_DURATION',
                             'OutputSelection': 'MANIFESTS_AND_SEGMENTS',
                             'StreamInfResolution': 'INCLUDE',

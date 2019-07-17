@@ -66,9 +66,12 @@ def create_channel(mediapackage, event, context, auto_id=True):
         )
         print(json.dumps(response))
         attributes = {
-            "Url": response["HlsIngest"]["IngestEndpoints"][0]["Url"],
-            "Username": response["HlsIngest"]["IngestEndpoints"][0]["Username"],
-            "Password": response["HlsIngest"]["IngestEndpoints"][0]["Password"]
+            "PrimaryUrl": response["HlsIngest"]["IngestEndpoints"][0]["Url"],
+            "PrimaryUsername": response["HlsIngest"]["IngestEndpoints"][0]["Username"],
+            "PrimaryPassword": response["HlsIngest"]["IngestEndpoints"][0]["Password"],
+            "SecondaryUrl": response["HlsIngest"]["IngestEndpoints"][1]["Url"],
+            "SecondaryUsername": response["HlsIngest"]["IngestEndpoints"][1]["Username"],
+            "SecondaryPassword": response["HlsIngest"]["IngestEndpoints"][1]["Password"]
         }
         result = {
             'Status': 'SUCCESS',

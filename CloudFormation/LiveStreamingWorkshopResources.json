@@ -1,75 +1,80 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "This template creates an end-to-end live and VOD streaming workflow. The AWS Elemental MediaLive channel will be started as the last step in stack creation.",
-    "Metadata": {
-        "AWS::CloudFormation::Designer": {
-            "63d3bd0b-8b73-4e7f-af2b-bdcee72c9f78": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 390,
-                    "y": 10
-                },
-                "z": 0,
-                "embeds": []
-            },
-            "71f69562-6796-4f2b-92c7-e984f034f202": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 390,
-                    "y": 80
-                },
-                "z": 0,
-                "embeds": []
-            },
-            "d0e73ea0-b8e8-4667-a5af-e8c6fa42058a": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 590,
-                    "y": 80
-                },
-                "z": 0,
-                "embeds": []
-            }
-        }
-    },
     "Resources": {
         "IAMModuleStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/IAMResources.json",
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Fn::Join": [
+                                    "-",
+                                    [
+                                        "https://rodeolabz",
+                                        {
+                                            "Ref": "AWS::Region"
+                                        }
+                                    ]
+                                ]
+                            },
+                            ".s3.amazonaws.com/cloudformation/IAMResources.json"
+                        ]
+                    ]
+                },
                 "TimeoutInMinutes": 5
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "63d3bd0b-8b73-4e7f-af2b-bdcee72c9f78"
-                }
             }
         },
         "MediaPackageModuleStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/MediaPackageResources.json",
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Fn::Join": [
+                                    "-",
+                                    [
+                                        "https://rodeolabz",
+                                        {
+                                            "Ref": "AWS::Region"
+                                        }
+                                    ]
+                                ]
+                            },
+                            ".s3.amazonaws.com/cloudformation/MediaPackageResources.json"
+                        ]
+                    ]
+                },
                 "TimeoutInMinutes": 5
             },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "71f69562-6796-4f2b-92c7-e984f034f202"
-                }
-            }
+            "DependsOn": "IAMModuleStack"
         },
         "MediaLiveModuleStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/MediaLiveResources.json",
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Fn::Join": [
+                                    "-",
+                                    [
+                                        "https://rodeolabz",
+                                        {
+                                            "Ref": "AWS::Region"
+                                        }
+                                    ]
+                                ]
+                            },
+                            ".s3.amazonaws.com/cloudformation/MediaLiveResources.json"
+                        ]
+                    ]
+                },
                 "TimeoutInMinutes": 5,
                 "Parameters": {
                     "HLSPrimarySource": {
@@ -81,37 +86,37 @@
                     "PackagerPrimaryChannelUrl": {
                         "Fn::GetAtt": [
                             "MediaPackageModuleStack",
-                            "Outputs.MediaPackagePrimaryChannelUrl"
+                            "Outputs.MediaPackagePrimaryInputUrl"
                         ]
                     },
                     "PackagerPrimaryChannelUsername": {
                         "Fn::GetAtt": [
                             "MediaPackageModuleStack",
-                            "Outputs.MediaPackagePrimaryChannelUsername"
+                            "Outputs.MediaPackagePrimaryInputUsername"
                         ]
                     },
                     "PackagerPrimaryChannelPassword": {
                         "Fn::GetAtt": [
                             "MediaPackageModuleStack",
-                            "Outputs.MediaPackagePrimaryChannelPassword"
+                            "Outputs.MediaPackagePrimaryInputPassword"
                         ]
                     },
                     "PackagerSecondaryChannelUrl": {
                         "Fn::GetAtt": [
                             "MediaPackageModuleStack",
-                            "Outputs.MediaPackageSecondaryChannelUrl"
+                            "Outputs.MediaPackageSecondaryInputUrl"
                         ]
                     },
                     "PackagerSecondaryChannelUsername": {
                         "Fn::GetAtt": [
                             "MediaPackageModuleStack",
-                            "Outputs.MediaPackageSecondaryChannelUsername"
+                            "Outputs.MediaPackageSecondaryInputUsername"
                         ]
                     },
                     "PackagerSecondaryChannelPassword": {
                         "Fn::GetAtt": [
                             "MediaPackageModuleStack",
-                            "Outputs.MediaPackageSecondaryChannelPassword"
+                            "Outputs.MediaPackageSecondaryInputPassword"
                         ]
                     },
                     "MediaLiveAccessRoleArn": {
@@ -122,16 +127,33 @@
                     }
                 }
             },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "d0e73ea0-b8e8-4667-a5af-e8c6fa42058a"
-                }
-            }
+            "DependsOn": [
+                "IAMModuleStack",
+                "MediaPackageModuleStack"
+            ]
         },
         "CloudWatchModuleStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/CloudWatchResources.json",
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Fn::Join": [
+                                    "-",
+                                    [
+                                        "https://rodeolabz",
+                                        {
+                                            "Ref": "AWS::Region"
+                                        }
+                                    ]
+                                ]
+                            },
+                            ".s3.amazonaws.com/cloudformation/CloudWatchResources.json"
+                        ]
+                    ]
+                },
                 "TimeoutInMinutes": 5,
                 "Parameters": {
                     "DashboardName": {
@@ -148,13 +170,13 @@
                     "MediaPackageChannelId": {
                         "Fn::GetAtt": [
                             "MediaPackageModuleStack",
-                            "Outputs.MediaPackagePrimaryChannelID"
+                            "Outputs.MediaPackageChannelID"
                         ]
                     },
                     "MediaPackageEndpointId": {
                         "Fn::GetAtt": [
                             "MediaPackageModuleStack",
-                            "Outputs.MediaPackagePrimaryLiveEndpointId"
+                            "Outputs.MediaPackageLiveEndpointId"
                         ]
                     },
                     "MediaLiveChannelId": {
@@ -163,11 +185,6 @@
                             "Outputs.MediaLiveChannelId"
                         ]
                     }
-                }
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "d0e73ea0-b8e8-4667-a5af-e8c6fa42058a"
                 }
             }
         }
@@ -185,32 +202,23 @@
         }
     },
     "Outputs": {
-        "MediaPackagePrimaryChannelLiveEndpointUrl": {
+        "MediaPackageChannelLiveEndpointUrl": {
             "Value": {
                 "Fn::GetAtt": [
                     "MediaPackageModuleStack",
-                    "Outputs.MediaPackagePrimaryChannelLiveEndpointUrl"
+                    "Outputs.MediaPackageChannelLiveEndpointUrl"
                 ]
             },
-            "Description": "URL for the primary channel live origin endpoint"
+            "Description": "URL for the channel live origin endpoint"
         },
-        "MediaPackagePrimaryChannelDelayedEndpointUrl": {
+        "MediaPackageChannelDelayedEndpointUrl": {
             "Value": {
                 "Fn::GetAtt": [
                     "MediaPackageModuleStack",
-                    "Outputs.MediaPackagePrimaryChannelDelayedEndpointUrl"
+                    "Outputs.MediaPackageChannelDelayedEndpointUrl"
                 ]
             },
-            "Description": "URL for the primary channel delayed origin endpoint"
-        },
-        "MediaPackageSecondaryChannelLiveEndpointUrl": {
-            "Value": {
-                "Fn::GetAtt": [
-                    "MediaPackageModuleStack",
-                    "Outputs.MediaPackageSecondaryChannelLiveEndpointUrl"
-                ]
-            },
-            "Description": "URL for the secondary channel live origin endpoint"
+            "Description": "URL for the channel delayed origin endpoint"
         },
         "CloudWatchDashboard": {
             "Value": {
