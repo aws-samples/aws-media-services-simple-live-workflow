@@ -146,7 +146,7 @@ def delete_channel(medialive, event, context):
     return result
 
 
-def get_video_description(w, h, b, n):
+def get_video_description(w, h, b, n, qvbr):    
     video_description = {
         'Height': int(h),
         'Width': int(w),
@@ -166,11 +166,13 @@ def get_video_description(w, h, b, n):
                 'GopSizeUnits': 'SECONDS',
                 'Level': 'H264_LEVEL_AUTO',
                 'LookAheadRateControl': 'HIGH',
+                'MaxBitrate': b,
                 'MinIInterval': 0,
                 'NumRefFrames': 1,
                 'ParControl': 'INITIALIZE_FROM_SOURCE',
                 'Profile': 'MAIN',
-                'RateControlMode': 'CBR',
+                'RateControlMode': 'QVBR',
+                'QvbrQualityLevel': qvbr,
                 'Syntax': 'DEFAULT',
                 'SceneChangeDetect': 'ENABLED',
                 'Slices': 1,
@@ -223,23 +225,22 @@ def get_output(n):
 def get_encoding_settings(layer, bitrateperc=1.0, framerate=1.0):
     # recommended bitrates for workshop samples
     c = {
-        '1080': {'width': 1920,  'height': 1080, 'bitrate': 6000000},
-        '720': {'width': 1280,  'height': 720,  'bitrate': 3800000},
-        '540': {'width': 960,   'height': 540,  'bitrate': 2300000},
-        '504': {'width': 896,   'height': 504,  'bitrate': 2100000},
-        '480': {'width': 854,   'height': 480,  'bitrate': 6000000},
-        '468': {'width': 832,   'height': 468,  'bitrate': 1800000},
-        '432': {'width': 768,   'height': 432,  'bitrate': 1600000},
-        '396': {'width': 704,   'height': 396,  'bitrate': 1300000},
-        '360': {'width': 640,   'height': 360,  'bitrate': 1200000},
-        '324': {'width': 576,   'height': 324,  'bitrate': 1100000},
-        '288': {'width': 512,   'height': 288,  'bitrate':  860000},
-        '270': {'width': 480,   'height': 270,  'bitrate':  750000},
-        '252': {'width': 448,   'height': 252,  'bitrate':  680000},
-        '234': {'width': 416,   'height': 234,  'bitrate':  640000},
-        '216': {'width': 384,   'height': 216,  'bitrate':  550000},
-        '144': {'width': 256,   'height': 144,  'bitrate':  264000},
-        '54':  {'width': 96,    'height': 54,   'bitrate':   62000},
+        '1080': {'width': 1920,  'height': 1080, 'bitrate': 4000000, 'qvbr': 8},
+        '720': {'width': 1280,  'height': 720,  'bitrate': 3800000, 'qvbr': 8},
+        '540': {'width': 960,   'height': 540,  'bitrate': 2300000, 'qvbr': 7},
+        '504': {'width': 896,   'height': 504,  'bitrate': 2100000, 'qvbr': 7},
+        '480': {'width': 854,   'height': 480,  'bitrate': 2000000, 'qvbr': 7},
+        '468': {'width': 832,   'height': 468,  'bitrate': 1800000, 'qvbr': 7},
+        '432': {'width': 768,   'height': 432,  'bitrate': 1600000, 'qvbr': 7},
+        '396': {'width': 704,   'height': 396,  'bitrate': 1300000, 'qvbr': 6},
+        '360': {'width': 640,   'height': 360,  'bitrate': 1200000, 'qvbr': 6},
+        '324': {'width': 576,   'height': 324,  'bitrate': 1100000, 'qvbr': 6},
+        '288': {'width': 512,   'height': 288,  'bitrate':  860000, 'qvbr': 5},
+        '270': {'width': 480,   'height': 270,  'bitrate':  750000, 'qvbr': 5},
+        '252': {'width': 448,   'height': 252,  'bitrate':  680000, 'qvbr': 4},
+        '234': {'width': 416,   'height': 234,  'bitrate':  640000, 'qvbr': 4},
+        '216': {'width': 384,   'height': 216,  'bitrate':  550000, 'qvbr': 3},
+        '144': {'width': 256,   'height': 144,  'bitrate':  264000, 'qvbr': 3}
     }
     this_layer = c[layer]
     this_layer['bitrate'] = int(
@@ -257,7 +258,7 @@ def create_live_channel(input_id, channel_name, layers, destinations, arn, media
         else:
             c = get_encoding_settings(str(l['height']), l['bitrateperc'])
         video_description = get_video_description(
-            c['width'], c['height'], c['bitrate'], str(str(c['height']) + 'p' + str(c['bitrate'])))
+            c['width'], c['height'], c['bitrate'], str(str(c['height']) + 'p' + str(c['bitrate'])), c['qvbr'])
         video_descriptions.append(video_description)
         output = get_output(str(str(c['height']) + 'p' + str(c['bitrate'])))
         outputs.append(output)

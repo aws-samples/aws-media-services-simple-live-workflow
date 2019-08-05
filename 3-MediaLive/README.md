@@ -103,8 +103,13 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 	1. Expand the **PID settings** section. 
 	1. Change **SCTE-35 Behavior** to **PASSTHROUGH**.
 	1. Scroll down to **Stream Settings**. Under **Video**, enter `1280` for **Width** and `720` for **Height** .
+	1. Select **H264** for **Codec Settings**.
 	1. Expand the **Rate Control** Settings.
+	1. Select **QVBR** for **Rate Control Mode**.
 	1. Enter `3800000` for **Bitrate**.
+	1. Expand the **Additional Settings**. 
+	1. Enter `3800000` for **Max Bitrate**.
+	1. Enter `8` for the **QVBR Quality Level**.
 
 	![alt](VideoStreamSettings.png)
 
@@ -112,15 +117,26 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 	1. Expand the **PID settings** section. 
 	1. Change **SCTE-35 Behavior** to **PASSTHROUGH**.
 	1. Under **Stream Settings**, **Video**, enter `960` for **Width** and `540` for **Height**.
+	1. Select **H264** for **Codec Settings**.
 	1. Expand the **Rate Control** Settings.
+	1. Select **QVBR** for **Rate Control Mode**.
 	1. Enter `2300000` for  **Bitrate**.
+	1. Expand the **Additional Settings**. 
+	1. Enter `2300000` for **Max Bitrate**.
+	1. Enter `7` for the **QVBR Quality Level**.
 
 1. On the left navigation pane, click on **Output 3** under **Output Groups**.
 	1. Expand the **PID settings** section. 
 	1. Change **SCTE-35 Behavior** to **PASSTHROUGH**.
-	1. Under **Stream Settings**, **Video**, enter `640` for **Width** and `360` for **Height** .
+	1. Under **Stream Settings**, **Video**, enter `640` for **Width** and `360` for **Height** 
+	1. Select **H264** for **Codec Settings**.
 	1. Expand the **Rate Control** Settings.
+	1. Select **QVBR** for **Rate Control Mode**.
 	1. Enter `1200000` for **Bitrate**.
+	1. Expand the **Additional Settings**. 
+	1. Enter `1200000` for **Max Bitrate**.
+	1. Enter `6` for the **QVBR Quality Level**.
+
 
 1. On the left navigation pane, click on **Create Channel**.
 

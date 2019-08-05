@@ -131,7 +131,7 @@
                         "Arn"
                     ]
                 },
-                "Runtime": "python3.6",
+                "Runtime": "python3.7",
                 "Timeout": 300
             },
             "Metadata": {
@@ -224,7 +224,7 @@
                         "Arn"
                     ]
                 },
-                "Runtime": "python3.6",
+                "Runtime": "python3.7",
                 "Timeout": 300
             },
             "Metadata": {
