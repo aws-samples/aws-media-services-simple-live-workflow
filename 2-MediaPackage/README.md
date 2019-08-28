@@ -40,22 +40,24 @@ The channel listing page with configured channels and metric graphs are shown in
 
 ### 3. Create an ingest channel
 
-AWS Elemental MediaLive creates a redundant (dual) channel configuration by default. In this section, we will create one AWS Elemental MediaPackage which by default will have two input URLs, each able to receive the adaptive bitrate streams from AWS Elemental MediaLive.
+In this section, we will create one AWS Elemental MediaPackage which by default will have two input URLs, each able to receive the adaptive bitrate streams from AWS Elemental MediaLive. 
 
 1. From the MediaPackage channel listing page, click the **Create Channel** button at the top-right.
-2. Provide a channel ID and short description. 
-3. Leave the input type as **Apple HLS**.
+1. Provide a channel ID and short description. 
+1. Leave the input type as **Apple HLS**.
+1. Under **CloudFront distribution details**, select **Create a CloudFront distribution for this channel**. It is highly recommended that a CDN is enabled for global distribution of your streaming video.
 
-See the image below for the Channel Create page.
+    See the image below for the Channel Create page.
+    ![alt](channel-create.png)
 
-![alt](channel-create.png)
+1. Click the Create Channel button.
+1. Once the create operation completes, the next page will show the information for the newly created channel. Copy and save the input URLs, and their correponding username and password to a text editor or word processor. You will need to click the **Show** link next to the hidden password to display actual characters.
 
-4. Click the Create Channel button.
-5. Once the create operation completes, the next page will show the information for the newly created channel. Copy and save the input URLs, and their correponding username and password to a text editor or word processor. You will need to click the **Show** link next to the hidden password to display actual characters.
-
-The next page shows the information for the newly created channel.
+The next page shows the information for the newly created channel, including the associated CloudFront distribution that's being deployed. **It takes roughly 20 minutes for the distribution to be fully deployed.**
 
 ![alt](channel-info.png)
+
+![alt](cloudfront-info.png)
 
 
 ### 4. Create HLS origin endpoints for the channel
@@ -105,3 +107,5 @@ Return to the [main](../README.md) page.
 ## Cloud Resource Clean Up
 
 To manually remove resources created in this module, go to the AWS Elemental MediaPackage console and remove the endpoints from the channel first, and then remove the channel. AWS Elemental MediaPackage will not allow you to remove a channel with existing endpoints.
+
+Next, go to the CloudFront console and select the distribution that was created by MediaPackage. The comment should say **Managed by MediaPackage** including the channel name. Click on the Disable button. This will take a few minutes. Once disabled, click on the Delete button.

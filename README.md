@@ -31,7 +31,7 @@ Following are links to CloudFormation templates for each module of the workshop.
 
 **These templates are supported in regions: ap-northeast-1 ap-northeast-2 ap-southeast-1 ap-southeast-2 eu-central-1 eu-west-1 eu-west-3 sa-east-1 us-east-1 us-west-2**
 
-- [**Entire Workshop**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/LiveStreamingWorkshopResources.json) - This template will perform all the configuration steps of modules 1, 2, 3 and the Extra CloudWatch module.
+- [**Entire Workshop**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/LiveStreamingWorkshopResources.json) - This template will perform all the configuration steps of modules 1, 2, 3 and the Extra CloudWatch module. Module 5(MediaTailor) is optional.
 
 - [**AWS IAM**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/IAMResources.json)
 
@@ -41,7 +41,7 @@ Following are links to CloudFormation templates for each module of the workshop.
 
 - **Browser Page** (not applicable)
 
-- **AWS Elemental MediaTailor** (not applicable)
+- [**AWS Elemental MediaTailor** ](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/MediaTailorResources.json)
 
 - [**Extra: AWS CloudWatch**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/CloudWatchResources.json)
 

@@ -65,7 +65,9 @@ def create_channel(mediapackage, event, context, auto_id=True):
             Description="CloudFormation Stack ID %s" % event["StackId"]
         )
         print(json.dumps(response))
+        print(response["Arn"])
         attributes = {
+            "Arn": response["Arn"],
             "PrimaryUrl": response["HlsIngest"]["IngestEndpoints"][0]["Url"],
             "PrimaryUsername": response["HlsIngest"]["IngestEndpoints"][0]["Username"],
             "PrimaryPassword": response["HlsIngest"]["IngestEndpoints"][0]["Password"],
@@ -73,6 +75,7 @@ def create_channel(mediapackage, event, context, auto_id=True):
             "SecondaryUsername": response["HlsIngest"]["IngestEndpoints"][1]["Username"],
             "SecondaryPassword": response["HlsIngest"]["IngestEndpoints"][1]["Password"]
         }
+        print(attributes)
         result = {
             'Status': 'SUCCESS',
             'Data': attributes,

@@ -36,20 +36,24 @@ Elemental MediaLive needs permission to access the value of the key from EC2 Sys
 
 To create a role to use with AWS Elemental MediaLive:
 1. Go to IAM -> Roles
-2. Click on Create Role
+1. Click on Create Role
 
-![alt](CreateRole.png)
+    ![alt](CreateRole.png)
 
-3. Select AWS Service Role -> EC2 as role type -> EC2 as use case
-4. Select AmazonSSMReadOnlyAccess and click on Next Step
-5. Give the role a name such as “AllowMediaLiveAccessRole”
-6. Click on Create Role
-7. Find the role in the IAM Roles page
-8. Click on the newly created role.
-9. Find the Role ARN at the top of the page. Copy it and save it in your text editor or word processor. You will need this in later steps.
-10. Click on tab called Trust relationships
-11. Click on Edit trust relationship
-12. Replace the existing policy with the following in the Policy Document edit window:
+1. Select **AWS Service** under type of trusted entity, and **EC2** as the service that will use this role.
+1. Click on Next:Permissions button,
+1. In the Filter Policies search box, enter `AmazonSSMReadOnlyAccess` and select the matching policy.
+1. In the Filter Policies search box, enter `CloudWatchLogsFullAccess` and select the matching policy.
+1. Click on Next:Tags button.
+1. Click on Next:Review button.
+1. Give the role a name such as `AllowMediaLiveAccessRole`.
+1. Click on Create Role.
+1. Search for the newly created role in the IAM Roles page by typing `AllowMediaLiveAccessRole` in the search box.
+1. Click on the newly created role.
+1. Find the Role ARN at the top of the page. Copy it and save it in your text editor or word processor. You will need this in later steps.
+1. Click on tab called Trust relationships
+1. Click on Edit trust relationship
+1. Replace the existing policy with the following in the Policy Document edit window:
 ```
 {
   "Version": "2012-10-17",
@@ -71,29 +75,26 @@ To create a role to use with AWS Elemental MediaLive:
   ]
 }
 ```
-13. Click on Update Trust Policy
+13. Click on Update Trust Policy.
 
 ### Adding AWS Elemental MediaLive permissions to the current signed-in IAM user
-
-
-Follow these steps to update the current user:
+If the current user does not have the AdministratorAccess policy, use the following steps to attach a IAM policy to the user that allows access to AWS Elemental MediaLive.
 1. Go to IAM > Users
-2. Find your currently signed-in user at the top-right of the console page.
+1. Find your currently signed-in user at the top-right of the console page.
 
-![alt](IAMUsers.png)
+    ![alt](IAMUsers.png)
 
-3. Find the same user in the user list and click it to see details.
-4. Click the **Add Permissions button**
+1. Find the same user in the user list and click it to see details.
+1. Click the **Add Permissions button**
 1. Click **Attach existing policies directly**
 1. Attach ‘AmazonS3ReadOnlyAccess’ and ‘CloudWatchReadOnlyAccess’ policies to
 the user.
 1. Click Next: Review
 1. Click Add Permissions
-4. Click on Add inline policy at the bottom right of the Permissions tab
+1. Click on Add inline policy at the bottom right of the Permissions tab
 1. Click on Custom Policy and click the Select button
-5. For Policy name, use something like MedialiveAccessPolicy. In the policy document field, paste the
-following.
-6. Replace the value of the Resource attribute in the last statement of the policy with the Role ARN you created previously in this module
+1. For Policy name, use something like MedialiveAccessPolicy. In the policy document field, paste the following.
+1. Replace the value of the Resource attribute in the last statement of the policy with the Role ARN you created previously in this module
 ```
 {
   "Version": "2012-10-17",
@@ -113,7 +114,7 @@ following.
   ]
 }
 ```
-6. Click on Validate Policy to check for typos, then click Apply Policy
+13. Click on Validate Policy to check for typos, then click Apply Policy
 
 ### Adding AWS Elemental MediaPackage permissions to a IAM user (optional)
 
@@ -121,22 +122,22 @@ If the current user does not have the AdministratorAccess policy, use the follow
 
 1. From the user's Summary page in IAM, click on Add inline policy at the bottom right of the Permissions tab
 1. Click on Custom Policy and click the Select button
-8. For Policy name, use something like MediaPackageAccessPolicy. In the policy document field, paste the following:
-```
-{
-  "Version": "2012-10-17",
-  "Statement": [
+1. For Policy name, use something like MediaPackageAccessPolicy. In the policy document field, paste the following:
+    ```
     {
-      "Effect": "Allow",
-      "Action": [
-        "mediapackage:*"
-      ],
-      "Resource": "*"
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "mediapackage:*"
+          ],
+          "Resource": "*"
+        }
+      ]
     }
-  ]
-}
-```
-6. Click on Validate Policy to check for typos, then click Apply Policy
+    ```
+1. Click on Validate Policy to check for typos, then click Apply Policy
 
 ## Completion
 

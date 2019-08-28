@@ -1,0 +1,141 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "EMTConfigLambda": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::Join": [
+                            "-",
+                            [
+                                "rodeolabz",
+                                {
+                                    "Ref": "AWS::Region"
+                                }
+                            ]
+                        ]
+                    },
+                    "S3Key": "cloudformation/simpleliveworkflow_resources.zip"
+                },
+                "Environment": {
+                    "Variables": {
+                        "CloudFrontDistributionId": {
+                            "Ref": "CloudFrontDistributionId"
+                        },
+                        "VideoSource": {
+                            "Ref": "VideoSourceURL"
+                        },
+                        "ADS": {
+                            "Ref": "ADS"
+                        }
+                    }
+                },
+                "Handler": "mediatailor_configuration.lambda_handler",
+                "MemorySize": 1024,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "EMTRole",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.7",
+                "Timeout": 300
+            }
+        },
+        "EMTRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+                    "arn:aws:iam::aws:policy/AWSLambdaFullAccess"
+                ],
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "mediatailor:*",
+                                        "cloudfront:Get*",
+                                        "cloudfront:Update*"
+                                    ],
+                                    "Resource": "*"
+                                }
+                            ]
+                        },
+                        "PolicyName": "EMTPolicy"
+                    }
+                ]
+            }
+        },
+        "MediaTailorConfigResource": {
+            "Type": "AWS::CloudFormation::CustomResource",
+            "Properties": {
+                "ServiceToken": {
+                    "Fn::GetAtt": [
+                        "EMTConfigLambda",
+                        "Arn"
+                    ]
+                },
+                "StackName": {
+                    "Ref": "AWS::StackName"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "CloudFrontDistributionId": {
+            "Description": "The CloudFront Distribution ID previously created for MediaPackage.",
+            "Type": "String"
+        },
+        "VideoSourceURL": {
+            "Description": "The URL for the master playlist for the HLS source stream. It's assumed that this video has ad markers.",
+            "Type": "String"
+        },
+        "ADS": {
+            "Description": "The URL for the ad decision server (ADS)",
+            "Type": "String",
+            "Default": "http://d2qohgpffhaffh.cloudfront.net/MediaTailor/VASTDemo.xml"
+        }
+    },
+    "Outputs": {
+        "ConfigurationName": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaTailorConfigResource",
+                    "ConfigurationName"
+                ]
+            },
+            "Description": "The MediaTailor configuration name created by the stack."
+        },
+        "CloudFrontPlaybackURL": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaTailorConfigResource",
+                    "CloudFrontPlaybackURL"
+                ]
+            },
+            "Description": "The URL with CloudFront for initiating a server-side MediaTailor HLS playback session. CloudFront must be fully deployed to use."
+        }
+    }
+}

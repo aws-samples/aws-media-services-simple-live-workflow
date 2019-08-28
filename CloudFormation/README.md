@@ -17,7 +17,7 @@ The current templates can be downloaded here and run individually. They can also
 
 **These templates are supported in regions: us-west-2, us-east-1, and eu-west-1.**
 
-- [**Entire Workshop**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/LiveStreamingWorkshopResources.json) - This template will perform all the configuration steps of modules 1, 2, 3 and the Extra Cloudwatch module.
+- [**Entire Workshop**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/LiveStreamingWorkshopResources.json) - This template will perform all the configuration steps of modules 1, 2, 3 and the Extra Cloudwatch module. Module 5 (MediaTailor) is optional.
 
 - [**AWS IAM**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/IAMResources.json)
 
@@ -27,7 +27,7 @@ The current templates can be downloaded here and run individually. They can also
 
 - **Browser Page** (not applicable)
 
-- [**AWS Elemental MediaTailor**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/CreateCloudfrontDistribution.json) - This template only automates the creation of CloudFront for MediaTailor. This does **not** automate the MediaTailor configuration creation. 
+- [**AWS Elemental MediaTailor**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/MediaTailorResources.json) - This template assumes that a CloudFront distribution has previously been created for MediaPackage and requires the distribution ID for deployment. 
 
 - [**Extra: AWS CloudWatch**](https://s3-us-west-2.amazonaws.com/rodeolabz-us-west-2/cloudformation/CloudWatchResources.json)
 

@@ -14,7 +14,7 @@ If you want to customize the browser page in this module, you will need to downl
 
 ### Video Players for Testing
 
-The AWS Elemental MediaPackage console includes an embedded player for checking the output of any origin endpoints. Each origin endpoint's console compartment will include a link to the endpoint for playback, a link to open the embedded player, and a link to display a QR code for playback on a mobile device.
+The AWS Elemental MediaPackage console includes an embedded player for checking the output of any origin endpoints. Each origin endpoint's console compartment will include a link to the endpoint for playback, a link to its CloudFront URL if CloudFront was enabled, a link to open the embedded player, and a link to display a QR code for playback on a mobile device.
 
 You can use a standalone video player to view the HLS endpoint created in the AWS Elemental MediaPackage module, such as QuickTime, VLC or any workstation-based player that supports HLS. 
 
@@ -36,11 +36,12 @@ You will need a text or code editor to customize the web page provided with this
 ## Test the AWS Elemental MediaPackage HLS Endpoint
 
 ### Embedded Player
+To test the MediaPackage endpoints directly, without going through the CloudFront distribution, we can do a video preview using the embedded player in the console. 
 
 1. Navigate to the AWS Elemental MediaPackage console.
 2. Select the channel you created previously.
 3. Find the origin endpoint on the channel page.
-4. Click the Play link on the endpoint compartment to test with the embedded player. See the images below.
+4. Click the Play link under the Preview column to test with the embedded player. See the image below.
 
 ![alt](endpoint-embedded-play.png)
 
@@ -53,13 +54,14 @@ The embedded player will launch in a new frame. Press the play icon to start str
 1. Navigate to the AWS Elemental MediaPackage console.
 2. Select a channel you created previously.
 3. Find the origin endpoint on the channel page.
-4. Select and copy the URL for the endpoint. See the image below.
+4. To test playback through the CloudFront distribution that got created by MediaPackage in the earlier module, click on the **Show CloudFront URL** link. 
+5. Select and copy the URL for the endpoint. See the image below.
 
 ![alt](endpoint-url.png)
-
+    
 5. Paste the URL into the player you are using. If you are not sure how to begin playback, check the documentation of the player.
 
-Review the previous two modules if your video stream doesn't start within a few seconds.
+Make sure that the CloudFront distribution is in a deployed state, if you are using the CloudFront URL for playback. If it is deployed and video is not playing back, review the previous two modules.
 
 ## Try the Browser Page Using the Default Endpoint
 
@@ -118,9 +120,9 @@ The file named **live-delayed-code.js** contains code to manage the page and con
 
     ![alt](time-delayed-code-sample.png)
     
-3. Replace the quoted URL with your first endpoint URL of the first MediaPackage channel you created.
+3. Replace the quoted URL with the live origin endpoint or corresponding CloudFront URL of the MediaPackage channel you created. This was the one created with startover window.
 4. Locate the line that starts with with **var delayed_video_source =** followed by a quoted URL. 
-5. Replace the quoted URL with the second endpoint URL that was configured for Time Delay of the first MediaPackage channel you created.
+5. Replace the quoted URL with the delayed origin endpoint or corresponding CloudFront URL that was configured for Time Delay of the MediaPackage channel you created.
 6. Save the file and exit your editor.
 7. Reload or refresh the player page in your browser. The players will now stream video from your instance of AWS Elemental MediaPackage.
 
@@ -154,15 +156,16 @@ The file named **code.js** contains code to manage the page and configure the vi
 
 ![alt](code-sample.png)
 
-3. Replace the quoted URL with your origin endpoint URL.
+3. Replace the quoted URL with your origin endpoint or its CloudFront URL.
+
 4. Save the file and exit your editor.
 5. Reload or refresh the player page in your browser. The players will now stream video from your instance of AWS Elemental MediaPackage.
 
 ### Endpoint Use for Live and On-Demand
 
-The same origin endpoints can be used for live and on-demand playback from the restart window of AWS Elemental MediaPackage. Recall in previous module for AWS Elemental MediaPackage the restart window for the origin endpoint was 3600 seconds (1 hour). By adding parameters to the origin endpoint URL, you can specify exactly where to start and end playback.
+The same origin endpoints can be used for live and on-demand playback from the restart window of AWS Elemental MediaPackage. Recall in previous module for AWS Elemental MediaPackage the restart window for the origin endpoint was 3600 seconds (1 hour). By adding parameters to the origin endpoint or its CloudFront URL, you can specify exactly where to start and end playback.
 
-The origin endpoint URL used alone will automatically play from the live point. Adding **start** and **end** parameters to the URL will cause AWS Elemental MediaPackage to play from the restart window. Here are some examples:
+The origin endpoint or its CloudFront URL used alone will automatically play from the live point. Adding **start** and **end** parameters to the URL will cause AWS Elemental MediaPackage to play from the restart window. Here are some examples:
 
 ```
 /out/v1/9406d427fce145b282d04a68ddd34c44/index.mpd?start=2017-08-09T02:08:43+00:00&end=2017-08-09T02:09:13+00:00

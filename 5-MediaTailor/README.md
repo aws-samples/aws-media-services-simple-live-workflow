@@ -60,7 +60,8 @@ concatenated with the **manifest filename of your MediaPackage playback endpoint
 
 **Step-by-step instructions**
 
-#### 3a. Add Origins to Your Distribution 
+#### 3a. Add Origins to Your Distribution
+If a CloudFront distribution has previously been created, edit the distribution to match the Origin and Behavior settings described below. Otherwise, it's assumed you're creating a new distribution.
 
 1. From the AWS Management Console, choose **Services** then select **CloudFront**.
 

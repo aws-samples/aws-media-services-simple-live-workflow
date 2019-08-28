@@ -8,7 +8,8 @@
                 "Code": {
                     "S3Bucket": {
                         "Fn::Join": [
-                            "-", [
+                            "-",
+                            [
                                 "rodeolabz",
                                 {
                                     "Ref": "AWS::Region"
@@ -39,17 +40,19 @@
                 ],
                 "AssumeRolePolicyDocument": {
                     "Version": "2012-10-17",
-                    "Statement": [{
-                        "Effect": "Allow",
-                        "Principal": {
-                            "Service": [
-                                "lambda.amazonaws.com"
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
                             ]
-                        },
-                        "Action": [
-                            "sts:AssumeRole"
-                        ]
-                    }]
+                        }
+                    ]
                 },
                 "Path": "/"
             }
@@ -74,7 +77,8 @@
                 "Code": {
                     "S3Bucket": {
                         "Fn::Join": [
-                            "-", [
+                            "-",
+                            [
                                 "rodeolabz",
                                 {
                                     "Ref": "AWS::Region"
@@ -137,7 +141,8 @@
                 "Code": {
                     "S3Bucket": {
                         "Fn::Join": [
-                            "-", [
+                            "-",
+                            [
                                 "rodeolabz",
                                 {
                                     "Ref": "AWS::Region"
@@ -158,6 +163,84 @@
                 },
                 "Runtime": "python3.7",
                 "Timeout": 300
+            }
+        },
+        "CloudFront": {
+            "Type": "AWS::CloudFront::Distribution",
+            "Properties": {
+                "DistributionConfig": {
+                    "Comment": "CloudFront for MediaPackage",
+                    "WebACLId": "",
+                    "Origins": [
+                        {
+                            "OriginPath": "",
+                            "CustomOriginConfig": {
+                                "OriginProtocolPolicy": "https-only",
+                                "OriginReadTimeout": 30,
+                                "HTTPPort": 80,
+                                "HTTPSPort": 443,
+                                "OriginKeepaliveTimeout": 5
+                            },
+                            "Id": "MediaPackage",
+                            "DomainName": {
+                                "Fn::Select": [
+                                    2,
+                                    {
+                                        "Fn::Split": [
+                                            "/",
+                                            {
+                                                "Fn::GetAtt": [
+                                                    "MediaPackageLiveEndpoint",
+                                                    "OriginEndpointUrl"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "DefaultRootObject": "",
+                    "PriceClass": "PriceClass_100",
+                    "Enabled": true,
+                    "DefaultCacheBehavior": {
+                        "TargetOriginId": "MediaPackage",
+                        "ViewerProtocolPolicy": "allow-all",
+                        "ForwardedValues": {
+                            "Cookies": {
+                                "Forward": "none"
+                            },
+                            "QueryString": true
+                        },
+                        "MaxTTL": 31536000,
+                        "SmoothStreaming": false,
+                        "DefaultTTL": 86400,
+                        "AllowedMethods": [
+                            "HEAD",
+                            "GET"
+                        ],
+                        "CachedMethods": [
+                            "HEAD",
+                            "GET"
+                        ],
+                        "MinTTL": 0,
+                        "Compress": false
+                    },
+                    "ViewerCertificate": {
+                        "CloudFrontDefaultCertificate": true
+                    },
+                    "HttpVersion": "http2"
+                },
+                "Tags": [
+                    {
+                       "Key": "mediapackage:cloudfront_assoc",
+                       "Value": {
+                        "Fn::GetAtt": [
+                            "MediaPackageChannel",
+                            "Arn"
+                        ]}  
+                    }
+                ]
             }
         }
     },
@@ -251,6 +334,70 @@
                 ]
             },
             "Description": "URL for the channel delayed origin endpoint"
+        },
+        "MediaPackageChannelLiveEndpointCloudFrontUrl": {
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [ 
+                        "https://",
+                        { "Fn::GetAtt": ["CloudFront", "DomainName"]},
+                        "/out",
+                        {
+                            "Fn::Select": [
+                                1,
+                                {
+                                    "Fn::Split": [
+                                        "out",
+                                        {
+                                            "Fn::GetAtt": [
+                                                "MediaPackageLiveEndpoint",
+                                                "OriginEndpointUrl"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                ]
+            },
+            "Description": "CloudFront URL for the channel live origin endpoint"
+        },
+        "MediaPackageChannelDelayedEndpointCloudFrontUrl": {
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [ 
+                        "https://",
+                        { "Fn::GetAtt": ["CloudFront", "DomainName"]},
+                        "/out",
+                        {
+                            "Fn::Select": [
+                                1,
+                                {
+                                    "Fn::Split": [
+                                        "out",
+                                        {
+                                            "Fn::GetAtt": [
+                                                "MediaPackageDelayedEndpoint",
+                                                "OriginEndpointUrl"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                ]
+            },
+            "Description": "URL for the channel delayed origin endpoint"
+        },
+        "CloudFrontDistributionId": {
+            "Value": {
+                "Ref": "CloudFront"
+            },
+            "Description": "CloudFront Distribution ID created for MediaPackage"
         }
     }
 }

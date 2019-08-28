@@ -48,8 +48,7 @@
                             ".s3.amazonaws.com/cloudformation/MediaPackageResources.json"
                         ]
                     ]
-                },
-                "TimeoutInMinutes": 5
+                }
             },
             "DependsOn": "IAMModuleStack"
         },
@@ -187,6 +186,56 @@
                     }
                 }
             }
+        },
+        "MediaTailorModuleStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Condition" : "CreateMediaTailorConfiguration",
+            "Properties": {
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Fn::Join": [
+                                    "-",
+                                    [
+                                        "https://rodeolabz",
+                                        {
+                                            "Ref": "AWS::Region"
+                                        }
+                                    ]
+                                ]
+                            },
+                            ".s3.amazonaws.com/cloudformation/MediaTailorResources.json"
+                        ]
+                    ]
+                },
+                "Parameters": {
+                    "CloudFrontDistributionId": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.CloudFrontDistributionId"
+                        ]
+                    },
+                    "VideoSourceURL": {
+                        "Fn::GetAtt": [
+                            "MediaPackageModuleStack",
+                            "Outputs.MediaPackageChannelLiveEndpointUrl"
+                        ]
+                    },
+                    "ADS": "http://d2qohgpffhaffh.cloudfront.net/MediaTailor/VASTDemo.xml"
+                }
+            }
+        }
+    },
+    "Conditions": {
+        "CreateMediaTailorConfiguration": {
+            "Fn::Equals": [
+                {
+                    "Ref": "CreateMediaTailor"
+                },
+                "True"
+            ]
         }
     },
     "Parameters": {
@@ -199,6 +248,15 @@
             "Default": "http://d2qohgpffhaffh.cloudfront.net/HLS/vanlife/withad/sdr_uncage_vanlife_admarker_60sec.m3u8",
             "Description": "URL of the secondary HLS pull source",
             "Type": "String"
+        },
+        "CreateMediaTailor": {
+            "Description": "If True, a new MediaTailor configuration is created based on MediaPackage origin and its CloudFront distribution.",
+            "Type": "String",
+            "Default": "False",
+            "AllowedValues": [
+                "True",
+                "False"
+            ]
         }
     },
     "Outputs": {
@@ -219,6 +277,34 @@
                 ]
             },
             "Description": "URL for the channel delayed origin endpoint"
+        },
+        "MediaPackageChannelLiveEndpointCloudFrontUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackageModuleStack",
+                    "Outputs.MediaPackageChannelLiveEndpointCloudFrontUrl"
+                ]
+            },
+            "Description": "CloudFront URL for the channel live origin endpoint"
+        },
+        "MediaPackageChannelDelayedEndpointCloudFrontUrl": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaPackageModuleStack",
+                    "Outputs.MediaPackageChannelDelayedEndpointCloudFrontUrl"
+                ]
+            },
+            "Description": "CloudFront URL for the channel delayed origin endpoint"
+        },
+        "MediaTailorCloudFrontHLSPlaybackURL": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "MediaTailorModuleStack",
+                    "Outputs.CloudFrontPlaybackURL"
+                ]
+            },
+            "Description": "The URL with CloudFront for initiating a server-side MediaTailor HLS playback session. CloudFront must be fully deployed to use.",
+            "Condition" : "CreateMediaTailorConfiguration"
         },
         "CloudWatchDashboard": {
             "Value": {

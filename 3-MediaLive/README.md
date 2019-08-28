@@ -1,6 +1,6 @@
 # Module 3: AWS Elemental MediaLive
 
-In this module you'll be creating an AWS Elemental MediaLive input which will in turn get used to set up a AWS Elemental MediaLive channel. During the channel creation, you will need the AWS Elemental MediaPackage endpoints and credentials you have created and saved from the previous module.
+In this module you'll be creating an AWS Elemental MediaLive input which will be used as video source for AWS Elemental MediaLive channel. During the channel creation, you will need the AWS Elemental MediaPackage endpoints and credentials you have created and saved from the previous module.
 
 ## Prerequisites
 
