@@ -42,7 +42,7 @@ The channel listing page with configured channels and metric graphs are shown in
 
 In this section, we will create one AWS Elemental MediaPackage which by default will have two input URLs, each able to receive the adaptive bitrate streams from AWS Elemental MediaLive. 
 
-1. From the MediaPackage channel listing page, click the **Create Channel** button at the top-right.
+1. From the MediaPackage channel listing page, click the **Create** button at the top-right.
 1. Provide a channel ID and short description. 
 1. Leave the input type as **Apple HLS**.
 1. Under **CloudFront distribution details**, select **Create a CloudFront distribution for this channel**. It is highly recommended that a CDN is enabled for global distribution of your streaming video.
@@ -62,7 +62,7 @@ The next page shows the information for the newly created channel, including the
 
 ### 4. Create HLS origin endpoints for the channel
 
-You will create two endpoings for the channel we just created. One origin endpoint with a restart window and a second endpoint with live output that is delayed by five seconds.
+You will create two endpoints for the channel we just created. One origin endpoint with a restart window and a second endpoint with live output that is delayed by five seconds.
 
 1. Return to the channel listing page for AWS Elemental MediaPackage console. Your page will contain the channel you created earlier, similar to the image shown below.
 

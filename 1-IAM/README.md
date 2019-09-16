@@ -42,8 +42,8 @@ To create a role to use with AWS Elemental MediaLive:
 
 1. Select **AWS Service** under type of trusted entity, and **EC2** as the service that will use this role.
 1. Click on Next:Permissions button,
-1. In the Filter Policies search box, enter `AmazonSSMReadOnlyAccess` and select the matching policy.
-1. In the Filter Policies search box, enter `CloudWatchLogsFullAccess` and select the matching policy.
+1. In the Filter Policies search box, enter `AmazonSSMReadOnlyAccess` and select the checkbox of the matching policy.
+1. In the Filter Policies search box, enter `CloudWatchLogsFullAccess` and select the checkbox of the matching policy.
 1. Click on Next:Tags button.
 1. Click on Next:Review button.
 1. Give the role a name such as `AllowMediaLiveAccessRole`.
@@ -51,7 +51,26 @@ To create a role to use with AWS Elemental MediaLive:
 1. Search for the newly created role in the IAM Roles page by typing `AllowMediaLiveAccessRole` in the search box.
 1. Click on the newly created role.
 1. Find the Role ARN at the top of the page. Copy it and save it in your text editor or word processor. You will need this in later steps.
-1. Click on tab called Trust relationships
+1. Under **Permissions**, click on the **Add inline policy** link.
+1. Click on the **JSON** tab.
+1. Replace the policy with the following:
+    ```
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "VisualEditor0",
+                "Effect": "Allow",
+                "Action": "mediaconnect:Managed*",
+                "Resource": "*"
+            }
+        ]
+    }
+    ```
+1. Click on Review Policy. 
+1. Give the policy a name like `MediaConnectManagedPolicy`. This allows MediaLive to create MediaConnect inputs, if you're using them.
+1. Click on Create Policy.
+1. Click on tab called **Trust relationships**.
 1. Click on Edit trust relationship
 1. Replace the existing policy with the following in the Policy Document edit window:
 ```

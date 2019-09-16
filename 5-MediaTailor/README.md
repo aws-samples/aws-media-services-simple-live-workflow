@@ -38,6 +38,16 @@ This module relies on the configuration of AWS Elemental MediaLive and AWS Eleme
 
 	![alt](MediaTailorConfig.png)
 
+1. Expand the **Additional configuration** section.
+
+1. Enter `http://d2qohgpffhaffh.cloudfront.net/MediaTailor/AWSE_Logo_15sec.mp4` for your **Slate Ad**. This is the ad that MediaTailor will insert if an ad is too short or unavailable (ADS is unreachable or ad is still being transcoded).
+
+1. Enter `http://d2qohgpffhaffh.cloudfront.net/MediaTailor/HLSPreRollVast.xml` for the **Live pre-roll ad decision server**. This ad will show at the beginning of every new playback session.
+
+	![alt](AdditionalConfiguration.png)
+
+1. Take the defaults for the rest of the parameters.
+
 1. Click **Create Configuration**. Click on the **Configurations** link to see the configuration you just created. Click on **MyTestCampaign** to see the **Playback endpoints** populated with playback URLs. Note down the **HLS playback prefix** as you'll need it in the next section.
 
 
@@ -54,7 +64,7 @@ concatenated with the **manifest filename of your MediaPackage playback endpoint
 
 	Provide the full playback URL to the player of your choice (eg.   _https://f445cfa805184f3e8d86dc2ac1137efa.mediatailor.us-east-1.amazonaws.com/v1/master/cf6421621b389b384c1fd22e51603ee95db76ae0/MyTestCampaign/index.m3u8_)
 
-1. You should see the main content of your video play for the first 30 seconds (if using input provided in the MediaLive lab), followed by ads, and then back to video content.
+1. You should see a pre-roll ad about 11 seconds long at the beginning of the playback session. After about 30 seconds of content, you should see ads, before going back to video's main content. 
 
 ### 3. Integrate with Amazon CloudFront
 
