@@ -25,7 +25,7 @@ def lambda_handler(event, context):
     # if doing a dynamic input switch, set to true
     # if true, must provide a dynamic_input_url
     dynamic = False # True | False
-    dynamic_input_url = "rodeolabz-us-west-2/reinvent2019/big_buck_bunny.mp4" 
+    dynamic_input_url = "rodeolabz-us-west-2/livestreamingworkshop/big_buck_bunny.mp4" 
 
     # the name of the input we're switching to
     input_attachment_name = "MP4Input"

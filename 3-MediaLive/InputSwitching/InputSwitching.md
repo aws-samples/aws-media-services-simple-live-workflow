@@ -22,7 +22,7 @@ We want to use a more recent version of the boto3 library than what is available
 1. Click on **Create Layer**. 
 1. Under **Layer configuration**, give the Layer a name like **Boto3Layer**.
 1. Select **Upload a file from Amazon S3**.
-1. Enter the following URL `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/reinvent2019/boto3-1.9.223.zip` into **Amazon S3 link URL** textbox.
+1. Enter the following URL `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/livestreamingworkshop/boto3-1.9.223.zip` into **Amazon S3 link URL** textbox.
 1. Under **Compatible runtimes**, select **Python 3.6** and **Python 3.7**.
 1. Click the **Create** button.
     ![alt](create-layer.png)
@@ -35,7 +35,7 @@ We want to use a more recent version of the boto3 library than what is available
 1. Click **Create function**.
 1. Scroll down to the **Function Code** section. 
 1. Under **code entry type**, select **Upload a file from S3**.
-1. Provide the following URL `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/reinvent2019/inputswitch.zip` in the **Amazon S3 link URL textbox**.
+1. Provide the following URL `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/livestreamingworkshop/inputswitch.zip` in the **Amazon S3 link URL textbox**.
 
     ![alt](lambda-code-type.png)
 1. Scroll down to the **Basic settings** section and increase the **Timeout** to `1 min`.
@@ -86,7 +86,7 @@ From the MediaLive console we will perform an immediate switch from the HLS VOD 
 1. Under **Start Type**, select **Immediate** from the dropdown.
 1. Under **Action Type**, select **Input Switch**.
 1. Under **Input Attachment**, select the Dynamic Input you’ve previously created.
-1. Under **Dynamic Input Settings**, provide the following URL `s3://rodeolabz-us-west-2/reinvent2019/big_buck_bunny.mp4`
+1. Under **Dynamic Input Settings**, provide the following URL `s3://rodeolabz-us-west-2/livestreamingworkshop/big_buck_bunny.mp4`
 
     ![alt](immediate-switch.png)
 

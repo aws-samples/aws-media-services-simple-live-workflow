@@ -26,7 +26,7 @@ Here, you will insert a static image overlay at a specific time and run it for 6
 1. Under **Start Type**, select **Fixed** from the dropdown.
 1. Set the **Date** to today's date and the **Time (UTC)** to a UTC time that's 2 minutes (minimum is 20 seconds) from now. This is to give us time to set up and schedule this action. To see current UTC time, visit https://time.is/UTC. 
 1. Under **Action Type**, select **Static Image Activate**.
-1. Under the Input Location **URL**, enter `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/reinvent2019/MediaLiveIcon.png`. Or enter location to your own image.
+1. Under the Input Location **URL**, enter `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/livestreamingworkshop/MediaLiveIcon.png`. Or enter location to your own image.
 
     ![alt](static-image-activate.png)
 1. Set the following settings:
@@ -50,7 +50,7 @@ This time you will insert two static images so that they both appear in the vide
 1. Under **Start Type**, select **Fixed** from the dropdown.
 1. Set the **Date** to today's date and the **Time (UTC)** to a UTC time that's 2 minutes (minimum is 20 seconds) from now. This is to give us time to set up and schedule this action. To see current UTC time, visit https://time.is/UTC.
 1. Under **Action Type**, select **Static Image Activate**.
-1. Under the Input Location **URL**, enter `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/reinvent2019/MediaLiveIcon.png`. Or enter location to your own image.
+1. Under the Input Location **URL**, enter `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/livestreamingworkshop/MediaLiveIcon.png`. Or enter location to your own image.
 1. Set the following settings:
     * Opacity -  `50`
     * Image X - `650`
@@ -66,7 +66,7 @@ This time you will insert two static images so that they both appear in the vide
 1. Under **Start Type**, select **Fixed** from the dropdown.
 1. Set the **Date** to today's date and the **Time (UTC)** to **30 seconds later than the time you specified for the last scheduled image overlay**.
 1. Under **Action Type**, select **Static Image Activate**.
-1. Under the Input Location **URL**, enter `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/reinvent2019/MediaPackageIcon.png`. Or enter location to your own image.
+1. Under the Input Location **URL**, enter `https://rodeolabz-us-west-2.s3-us-west-2.amazonaws.com/livestreamingworkshop/MediaPackageIcon.png`. Or enter location to your own image.
 1. Set the following settings:
     * Layer - `1`  (this will put our second image on top of the first image which is on Layer 0 by default)
     * Image X - `650`
