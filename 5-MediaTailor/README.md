@@ -19,7 +19,7 @@ This module relies on the configuration of AWS Elemental MediaLive and AWS Eleme
 
 **Step-by-step instructions**
 
-1. From the AWS Management Console, choose **Services** then select **AWS Elemental MediaTailor**. Make sure you're in **us-east-1** region.
+1. From the AWS Management Console, choose **Services** then select **AWS Elemental MediaTailor**. Make sure you're in the same region as your MediaPackage channel.
 
 1. Click on **Create configuration**.
 
@@ -59,10 +59,10 @@ This module relies on the configuration of AWS Elemental MediaLive and AWS Eleme
 	* http://videojs.github.io/videojs-contrib-hls/
 	* https://developer.jwplayer.com/tools/stream-tester/
 
-1. Your full playback URL will be the **HLS playback prefix** (eg. _https://f445cfa805184f3e8d86dc2ac1137efa.mediatailor.us-east-1.amazonaws.com/v1/master/cf6421621b389b384c1fd22e51603ee95db76ae0/MyTestCampaign/_)
+1. Your full playback URL will be the **HLS playback prefix** (eg. _https://f445cfa805184f3e8d86dc2ac1137efa.mediatailor.us-west-2.amazonaws.com/v1/master/cf6421621b389b384c1fd22e51603ee95db76ae0/MyTestCampaign/_)
 concatenated with the **manifest filename of your MediaPackage playback endpoint** (eg. _index.m3u8_) 
 
-	Provide the full playback URL to the player of your choice (eg.   _https://f445cfa805184f3e8d86dc2ac1137efa.mediatailor.us-east-1.amazonaws.com/v1/master/cf6421621b389b384c1fd22e51603ee95db76ae0/MyTestCampaign/index.m3u8_)
+	Provide the full playback URL to the player of your choice (eg.   _https://f445cfa805184f3e8d86dc2ac1137efa.mediatailor.us-west-2.amazonaws.com/v1/master/cf6421621b389b384c1fd22e51603ee95db76ae0/MyTestCampaign/index.m3u8_)
 
 1. You should see a pre-roll ad about 11 seconds long at the beginning of the playback session. After about 30 seconds of content, you should see ads, before going back to video's main content. 
 
@@ -79,26 +79,28 @@ If a CloudFront distribution has previously been created, edit the distribution 
 
 1. Select the **Web** delivery method for your content and hit the **Get Started** button. 
 
-1. Under **Origin Settings**, enter the domain name of your origin for **Origin Domain Name**. In our case, this is the domain name of MediaPackage (eg. _547f72e6652371c3.mediapackage.us-east-1.amazonaws.com_)
+1. Under **Origin Settings**, enter the domain name of your origin for **Origin Domain Name**. In our case, this is the domain name of MediaPackage (eg. _547f72e6652371c3.mediapackage.us-west-2.amazonaws.com_)
 
-1. Take the default for all the other settings. But scroll down until you see the **Comment** textbox and enter `CloudFront for MediaTailor`.
+1. Under **Origin Policy**, select **HTTPS Only**.
+
+1. Scroll down to **Default Cache Behavior Settings** section. Set **Query String Forwarding and Caching** to **Forward all, cache based on all**.
+
+1. Take the default for all the other settings. Scroll down until you see the **Comment** textbox and enter `CloudFront for MediaTailor`.
 
 1. Click the **Create Distribution** button. This will take you back to the main Distribution page of cloudfront. Your distribution will be in an **In Progress** state. The quickest way to tell which of the Distributions is yours is by the comment you entered. 
 
 1. While your Distribution is still **In Progress**, go ahead and select the same distribution by clicking on its ID. This will take you to its settings. 
 
-1. Click on the **Origins** tab and select the origin you just added and hit **Edit**. Update the **Origin Protocol Policy** to **HTTPS**.  Click on **Yes, Edit** to save your changes.
-
 1. Go back to the **Origins** tab, and click on the **Create Origin** button. 
 
-1. Enter MediaTailor's hostname for the **Origin Domain Name**. This will come from the **HLS playback prefix** of MediaTailor (e.g. _f445cfa805184f3e8d86dc2ac1137efa.mediatailor.us-east-1.amazonaws.com_)
+1. Enter MediaTailor's hostname for the **Origin Domain Name**. This will come from the **HLS playback prefix** of MediaTailor (e.g. _f445cfa805184f3e8d86dc2ac1137efa.mediatailor.us-west-2.amazonaws.com_)
 
 1. Update the **Origin Protocol Policy** to **HTTPS**. Click **Create**. 
 
 1. Go back to the **Origins** tab, and click on the **Create Origin** button. 
 
-1. Enter MediaTailor's ad server hostname for the **Origin Domain Name**. If MediaTailor is being set up in us-east-1 then the Origin is:
-`ads.mediatailor.us-east-1.amazonaws.com`
+1. Enter MediaTailor's ad server hostname for the **Origin Domain Name**. If MediaTailor is being set up in us-west-2 then the Origin is:
+`segments.mediatailor.us-west-2.amazonaws.com`
 
 1. Update the **Origin Protocol Policy** to **HTTPS**.  Click on **Create**.
 
@@ -111,7 +113,9 @@ If a CloudFront distribution has previously been created, edit the distribution 
 
 1. Enter `/out/v1/*` for the **Path Pattern**. 
 
-1. Under **Origin**, select the MediaPackage origin. 
+1. Under **Origin or Origin Group**, select the MediaPackage origin. 
+
+1. Set the **Query String Forwarding and Caching** to **Forward all, cache based on all**
 
 1. Click the **Create** button to add another cache behavior. 
 
@@ -121,15 +125,13 @@ If a CloudFront distribution has previously been created, edit the distribution 
 
 1. Under **Origin**, select the MediaTailor origin. 
 
-1. For **Query String Forwarding and Caching**, select **Forward all, cache based on all**. 
+1. Set **Query String Forwarding and Caching**, to **Forward all, cache based on all**. 
 
 1. Click the **Create** button to add another cache behavior. 
 
 1. Select the **Default** behavior, and click on the **Edit** button.
 
-1. Make sure the **Origin** is pointed to the Ad Server origin (e.g. _ads.mediatailor.us-east-1.amazonaws.com_)
-
-1. For **Query String Forwarding and Caching**, select **Forward all, cache based on all**. 
+1. Make sure the **Origin** is pointed to the Ad Server origin (e.g. _segments.mediatailor.us-west-2.amazonaws.com_)
 
 1. Click on **Yes, Edit** button. 
 
@@ -155,7 +157,7 @@ If a CloudFront distribution has previously been created, edit the distribution 
 
 1. Once your CloudFront distribution is in the **Deployed** status, and **Enabled** state, try playing back your stream using the same player you selected in section 2 of this lab. Take your playback URL from Section 2, Step 2 and replace the MediaTailor hostname with the CloudFront **Domain Name** that was assigned to your distribution. 
 
-	For example, if your MediaTailor playback URL is: _https://**f445cfa805184f3e8d86dc2ac1137efa.mediatailor.us-east-1.amazonaws.com**/v1/master/cf6421621b389b384c1fd22e51603ee95db76ae0/MyTestCampaign/index.m3u8_
+	For example, if your MediaTailor playback URL is: _https://**f445cfa805184f3e8d86dc2ac1137efa.mediatailor.us-west-2.amazonaws.com**/v1/master/cf6421621b389b384c1fd22e51603ee95db76ae0/MyTestCampaign/index.m3u8_
 
 
 	then your CloudFront playback URL is:
