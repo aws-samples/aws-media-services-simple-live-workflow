@@ -30,14 +30,24 @@ Before you can create a AWS Elemental MediaLive channel, you must first create a
 1. Click **Create**.
 
 #### Create a MediaConnect Input
-Before you can create a MediaConnect input in MediaLive, we will first need to create a MediaConnect Flow. If you're working on this module during one of our in-person workshops, your account has been previously entitled a live source which you will use as the source for your flow. Otherwise, see this doc on how
+Before you can create a MediaConnect input in MediaLive, we will first need to create a MediaConnect Flow. We will be working with a standard MediaLive channel which requires redundant sources so we will be creating two flows. 
+If you're working on this module during one of our in-person workshops, your account has been previously entitled a live source which you will use as the sources for your flow. Otherwise, see [this doc](https://docs.aws.amazon.com/mediaconnect/latest/ug/entitlements-originator.html) on how entitlement works.
 
 1. Navigate to the MediaConnect console.
 1. Click on the **Create Flow** button.
-1. Give the **Flow** a name like `EntitledFlow`.
+1. Give the **Flow** a name like `EntitledFlow1`.
+1. Under **Availability Zone**, select **us-west-2a**.
 1. Under **Source**, select **Entitled source**.
     ![alt](create-flow.png)
-1. Under **Entitlement ARN**, select the entitled source from the dropdown. There should only be one. 
+1. Under **Entitlement ARN**, select the first entitled source from the dropdown.
+1. Click on **Create Flow** button. Your flow will be in a **STANDBY** status. 
+1. Click on **Start** button to start the Flow. This will put the flow in an **ACTIVE** status.
+1. Note the ARN of this flow. Copy and save it in a text file, as we will use it to create our MediaConnect input later.
+1. Click on the **Create Flow** button again.
+1. Give the **Flow** a name like `EntitledFlow2`.
+1. Under **Availability Zone**, select **us-west-2b**. The two flows we are creating cannot be in the same availability zone.
+1. Under **Source**, select **Entitled source**.
+1. Under **Entitlement ARN**, select the second entitled source from the dropdown.
 1. Click on **Create Flow** button. Your flow will be in a **STANDBY** status. 
 1. Click on **Start** button to start the Flow. This will put the flow in an **ACTIVE** status.
 1. Note the ARN of this flow. Copy and save it in a text file, as we will use it to create our MediaConnect input.
@@ -45,8 +55,9 @@ Before you can create a MediaConnect input in MediaLive, we will first need to c
 1. Click on **Create Input** button.
 1. Provide an input name like `MediaConnectInput`.
 1. Select **MediaConnect** for input type.
-1. Under MediaConnect flows, enter the Flow ARN of the flow you just created for **Flow A ARN**. Leave  **Flow B ARN** blank.
-1. Under **Role ARN**, select **Existing Role**, and pick the MediaLive role you previously created from the dropdown. 
+1. Under MediaConnect flows, enter the Flow ARN of the first flow you  created for **Flow A ARN**. 
+1. Enter the Flow ARN of the second flow you created for **Flow B ARN**.
+1. Under **Role ARN**, select **Existing Role**, and pick the previously created MediaLive role from the dropdown. 
 1. Click **Create**.
     ![alt](mediaconnect-input.png)
 
@@ -57,7 +68,7 @@ Before you can create a MediaConnect input in MediaLive, we will first need to c
 1. Click on Create Input button.
 1. Provide an input name like `DynamicInput`.
 1. Select **MP4** for input type.
-1. For Input Source A and Input Source B, enter `s3://$urlPath$`.
+1. For Input Source A and Input Source B, enter `http://$urlPath$`.
 1. Click **Create** button.
     ![alt](dynamic-input.png)
 
@@ -74,7 +85,7 @@ Before you can create a MediaConnect input in MediaLive, we will first need to c
 
 ### 2. Create an AWS Elemental MediaLive Channel
 
-You will now create an AWS Elemental MediaLive Channel that will publish to the MediaPackage channel you created in a previous module. The MediaLive channel will use the input you created in the previous step.
+You will now create an AWS Elemental MediaLive Channel that will publish to the MediaPackage channel you created in a previous module. The MediaLive channel will use the inputs you created in the previous step.
 
 **Step-by-step instructions**
 
@@ -92,7 +103,11 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 
 1. From the **Input** dropdown, select the `HLS Input` you created earlier. Click on **Confirm**.
 
-1. Scroll down to **General Input Settings**.  Set **Source End Behavior** to `Loop`.
+1. Scroll down to **General Input Settings**. Set **Buffer Segments** to `10`.
+
+1. Set **Source End Behavior** to `Loop`.
+
+	![alt](hls-input-settings.png)
 
 1. Add the rest of the inputs you created earlier by click on **Add** next to **Input Attachments**. 
 

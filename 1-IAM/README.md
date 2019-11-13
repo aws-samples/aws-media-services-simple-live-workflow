@@ -50,7 +50,6 @@ To create a role to use with AWS Elemental MediaLive:
 1. Click on Create Role.
 1. Search for the newly created role in the IAM Roles page by typing `AllowMediaLiveAccessRole` in the search box.
 1. Click on the newly created role.
-1. Find the Role ARN at the top of the page. Copy it and save it in your text editor or word processor. You will need this in later steps.
 1. Under **Permissions**, click on the **Add inline policy** link.
 1. Click on the **JSON** tab.
 1. Replace the policy with the following:

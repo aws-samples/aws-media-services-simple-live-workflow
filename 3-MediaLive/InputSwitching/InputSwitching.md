@@ -73,7 +73,7 @@ The default role automatically created by Lambda for the function does not give 
 5. Click on **Review Policy** button. 
 6. Give the policy a name like `MediaLivePolicy`. 
 7. Click on **Create Policy** button.
-8. Back to the previous tab where you were attaching a policy, search for your newly created policy by putting in `MediaLivePolicy` in the filter textbox.
+8. Back to the previous tab where you were attaching a policy, search for your newly created policy by putting in `MediaLivePolicy` in the filter textbox. You may have to click on the refresh button if searching yields no results.
 9. Select the policy and click on the **Attach Policy** button.
 
 
@@ -86,12 +86,12 @@ From the MediaLive console we will perform an immediate switch from the HLS VOD 
 1. Under **Start Type**, select **Immediate** from the dropdown.
 1. Under **Action Type**, select **Input Switch**.
 1. Under **Input Attachment**, select the Dynamic Input you’ve previously created.
-1. Under **Dynamic Input Settings**, provide the following URL `s3://rodeolabz-us-west-2/livestreamingworkshop/big_buck_bunny.mp4`
+1. Under **Dynamic Input Settings**, provide the following URL `rodeolabz-us-west-2.s3.amazonaws.com/livestreamingworkshop/big_buck_bunny.mp4`
 
     ![alt](immediate-switch.png)
 
 1. Hit Create button.
-1. After action has been created, a UTC time is shown on when the input switch is going to occur. 
+1. After action has been created, click on the **View Settings** link  to see the time (in UTC) on when the input switch is scheduled to occur. 
 1. Open a new tab on your browser, and navigate to the MediaPackage console. 
 1. Locate and select the MediaPackage channel you created earlier.
 1. In the **Endpoints** section, click on **Show CloudFront URL** and copy the URL.
@@ -136,7 +136,7 @@ Using the same Lambda function, we will schedule a switch to our MediaConnect in
     * **input_attachment_name**: set to the input we're switching to which is `MediaConnectInput`
     * **follow_action_name**: set to the action name of the last switch we scheduled. This will be something like `fixed_input_switch.<random_number>`.
 1. Save your changes by clicking on the Save button.
-1. Test should run with no errors. 
+1. Click on the Test button. Test should run with no errors. 
 1. On the browser tab that has the MediaLive console open, click on your channel and select the **Schedule** tab. Verify that the a follow input switch has been scheduled.
 
     ![alt](scheduled-actions.png)
