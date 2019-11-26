@@ -168,7 +168,10 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 	1. Enter `3800000` for **Max Bitrate**.
 	1. Enter `8` for the **QVBR Quality Level**.
 
-	![alt](../VideoStreamSettings.png)
+		![alt](../VideoStreamSettings.png)
+
+	1. Expand the **Codec Details** settings, then expand **Additional settings**. 
+	1. Set **Color Metadata** to **Ignore**.
 
 1. On the left navigation pane, click on **Output 2** under **Output Groups**.
 	1. Expand the **PID settings** section. 
@@ -181,6 +184,8 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 	1. Expand the **Additional Settings**. 
 	1. Enter `2300000` for **Max Bitrate**.
 	1. Enter `7` for the **QVBR Quality Level**.
+	1. Expand the **Codec Details** settings, then expand **Additional settings**. 
+	1. Set **Color Metadata** to **Ignore**.
 
 1. On the left navigation pane, click on **Output 3** under **Output Groups**.
 	1. Expand the **PID settings** section. 
@@ -193,7 +198,8 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 	1. Expand the **Additional Settings**. 
 	1. Enter `1200000` for **Max Bitrate**.
 	1. Enter `6` for the **QVBR Quality Level**.
-
+	1. Expand the **Codec Details** settings, then expand **Additional settings**. 
+	1. Set **Color Metadata** to **Ignore**.
 
 1. On the left navigation pane, click on **Create Channel**.
 
