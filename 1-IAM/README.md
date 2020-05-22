@@ -72,28 +72,28 @@ To create a role to use with AWS Elemental MediaLive:
 1. Click on tab called **Trust relationships**.
 1. Click on Edit trust relationship
 1. Replace the existing policy with the following in the Policy Document edit window:
-```
-{
-  "Version": "2012-10-17",
-  "Statement": [
+    ```
     {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    },
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "medialive.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        },
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "medialive.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
     }
-  ]
-}
-```
-13. Click on Update Trust Policy.
+    ```
+1. Click on Update Trust Policy.
 
 ### Adding AWS Elemental MediaLive permissions to the current signed-in IAM user
 If the current user does not have the AdministratorAccess policy, use the following steps to attach a IAM policy to the user that allows access to AWS Elemental MediaLive.
