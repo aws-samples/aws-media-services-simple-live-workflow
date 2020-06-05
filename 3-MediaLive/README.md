@@ -46,11 +46,15 @@ You will now create an AWS Elemental MediaLive Channel that will publish to the 
 
 1. Click on **Create channel**.
 
-	![alt](MediaLiveChannel.png)
-
 1. Under **General Info**, enter `HLS Stream Channel` for **Channel Name**.
 
-1. For the **IAM Role**, use the default option **Use existing role**. In the dropdown, select the role ARN that was created while working on the IAM module. 
+1. For the **IAM Role**, use the default option **Use existing role**. In the dropdown, select the role ARN that was created while working on the IAM module.
+
+	![MediaLiveChannel](MediaLiveChannel.png)
+
+	**NOTE:** If the **Create role from template** is selected by default, and a **Create IAM Role** button is available, click on the button. This will create the MediaLiveAccessRole and automatically selected as the role to use.
+
+	![MediaLiveIAMRole](../1-IAM/MediaLiveIAMRole.png) 
 
 1. On the left navigation pane, under **Input attachments**, click on **Add**.
 
