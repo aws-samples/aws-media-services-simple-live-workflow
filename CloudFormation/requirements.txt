@@ -10,7 +10,7 @@ packaging==16.8
 pyasn1==0.4.2
 pyparsing==2.2.0
 python-dateutil==2.6.1
-PyYAML==5.1
+PyYAML==5.4
 rsa==4.1
 s3transfer==0.1.11
 six==1.11.0
